@@ -8,9 +8,9 @@
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public int UserTypeId { get; set; }
+        public int BookId { get; set; }
 
         public virtual UserTypeDto UserType { get; set; }
         public virtual BookDto Book { get; set; }
-        public virtual RentLocationDto RentLocation { get; set; }
     }
 }
