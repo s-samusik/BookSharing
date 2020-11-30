@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\domain\BookSharing\BookSharing.csproj" />
+    <ProjectReference Include="..\..\infrastructure\BookSharing.Data.EF\BookSharing.Data.EF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
