@@ -9,7 +9,6 @@ namespace BookSharing.Models
 
         #region Properties
         public int Id => dto.Id;
-
         public string Name
         {
             get => dto.Name;

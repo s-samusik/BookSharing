@@ -3,9 +3,9 @@ using System;
 
 namespace BookSharing.Models
 {
-    public class Author
+    public class UserType
     {
-        private readonly AuthorDto dto;
+        private readonly UserTypeDto dto;
 
         #region Properties
         public int Id => dto.Id;
@@ -20,7 +20,7 @@ namespace BookSharing.Models
         }
         #endregion
 
-        internal Author(AuthorDto dto)
+        internal UserType(UserTypeDto dto)
         {
             this.dto = dto;
         }
