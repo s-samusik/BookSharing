@@ -47,5 +47,32 @@ namespace BookSharing.Models
         {
             this.dto = dto;
         }
+
+        public static class DtoFactory
+        {
+            public static RentLocationAddressDto Create(RentLocationDto rentLocation, string country, string city, string street, string building)
+            {
+                #region Checking incoming parameters
+                if (rentLocation == null) throw new ArgumentNullException(nameof(rentLocation));
+                if (string.IsNullOrWhiteSpace(city)) throw new ArgumentException(nameof(city));
+                if (string.IsNullOrWhiteSpace(street)) throw new ArgumentException(nameof(street));
+                if (string.IsNullOrWhiteSpace(building)) throw new ArgumentException(nameof(building));
+                #endregion
+
+                return new RentLocationAddressDto
+                {
+                    Country = country,
+                    City = city,
+                    Street = street,
+                    Building = building,
+                };
+            }
+        }
+
+        public static class Mapper
+        {
+            public static RentLocationAddress Map(RentLocationAddressDto dto) => new RentLocationAddress(dto);
+            public static RentLocationAddressDto Map(RentLocationAddress domain) => domain.dto;
+        }
     }
 }

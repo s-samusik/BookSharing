@@ -24,5 +24,27 @@ namespace BookSharing.Models
         {
             this.dto = dto;
         }
+
+        public static class DtoFactory
+        {
+            public static UserTypeDto Create(UserDto user, string name)
+            {
+                #region
+                if (user == null) throw new ArgumentNullException(nameof(user));
+                if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
+                #endregion
+
+                return new UserTypeDto
+                {
+                    Name = name,
+                };
+            }
+        }
+
+        public static class Mapper
+        {
+            public static UserType Map(UserTypeDto dto) => new UserType(dto);
+            public static UserTypeDto Map(UserType domain) => domain.dto;
+        }
     }
 }

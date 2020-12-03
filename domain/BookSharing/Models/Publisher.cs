@@ -24,5 +24,26 @@ namespace BookSharing.Models
         {
             this.dto = dto;
         }
+
+        public static class DtoFactory
+        {
+            public static PublisherDto Create(string name)
+            {
+                #region Checking incoming parameters
+                if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
+                #endregion
+
+                return new PublisherDto
+                {
+                    Name = name,
+                };
+            }
+        }
+
+        public static class Mapper
+        {
+            public static Publisher Map(PublisherDto dto) => new Publisher(dto);
+            public static PublisherDto Map(Publisher domain) => domain.dto;
+        }
     }
 }
