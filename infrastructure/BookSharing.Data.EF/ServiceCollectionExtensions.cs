@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 
 namespace BookSharing.Data.EF
 {
@@ -15,6 +17,9 @@ namespace BookSharing.Data.EF
                 ServiceLifetime.Transient
             );
 
+            services.AddScoped<Dictionary<Type, BookSharingDbContext>>();
+            services.AddSingleton<DbContextFactory>();
+            
             return services;
         }
     }
