@@ -50,11 +50,15 @@ namespace BookSharing.Models
             get => new UserType(dto.UserType);
             set
             {
-                if (value == null) throw new ArgumentException(nameof(UserType));
-                dto.UserType.Name = value.Name.Trim();
+                if (value == null) throw new ArgumentNullException(nameof(UserType));
+                dto.UserType.Id = value.Id;
             }
         }
-        // TODO: add nullable book
+        public Book Book
+        {
+            get => new Book(dto.Book);
+            set => dto.Book.Id = value.Id;
+        }
         #endregion
 
         internal User(UserDto dto)

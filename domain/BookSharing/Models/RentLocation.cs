@@ -25,10 +25,7 @@ namespace BookSharing.Models
             {
                 if (value == null) throw new ArgumentNullException(nameof(RentLocationAddress));
 
-                dto.RentLocationAddress.Country = value?.Country.Trim();
-                dto.RentLocationAddress.City = value.City.Trim();
-                dto.RentLocationAddress.Street = value.Street.Trim();
-                dto.RentLocationAddress.Building = value.Building.Trim();
+                dto.RentLocationAddress.Id = value.Id;
             }
         }
         #endregion

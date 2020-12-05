@@ -3,9 +3,9 @@ using System;
 
 namespace BookSharing.Models
 {
-    public class UserType
+    public class Genre
     {
-        private readonly UserTypeDto dto;
+        private readonly GenreDto dto;
 
         #region Properties
         public int Id => dto.Id;
@@ -20,27 +20,28 @@ namespace BookSharing.Models
         }
         #endregion
 
-        internal UserType(UserTypeDto dto)
+        internal Genre(GenreDto dto)
         {
             this.dto = dto;
         }
 
         public static class DtoFactory
         {
-            public static UserTypeDto Create(string name)
+            public static GenreDto Create(string name)
             {
                 #region Checking incoming parameters
                 if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
                 #endregion
 
-                return new UserTypeDto { Name = name };
+                return new GenreDto { Name = name };
             }
         }
 
         public static class Mapper
         {
-            public static UserType Map(UserTypeDto dto) => new UserType(dto);
-            public static UserTypeDto Map(UserType domain) => domain.dto;
+            public static Genre Map(GenreDto dto) => new Genre(dto);
+            public static GenreDto Map(Genre domain) => domain.dto;
         }
+
     }
 }

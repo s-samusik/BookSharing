@@ -33,10 +33,7 @@ namespace BookSharing.Models
                 if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
                 #endregion
 
-                return new PublisherDto
-                {
-                    Name = name,
-                };
+                return new PublisherDto { Name = name };
             }
         }
 
