@@ -9,5 +9,6 @@
         public string Building { get; set; }
 
         public virtual RentLocationDto RentLocation { get; set; }
+
     }
 }

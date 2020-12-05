@@ -11,6 +11,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\domain\BookSharing\BookSharing.csproj" />
+    <ProjectReference Include="..\..\infrastructure\BookSharing.Data.EF\BookSharing.Data.EF.csproj" />
   </ItemGroup>
 
   <ItemGroup>
