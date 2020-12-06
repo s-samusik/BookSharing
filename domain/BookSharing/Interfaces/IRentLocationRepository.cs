@@ -8,7 +8,6 @@ namespace BookSharing.Interfaces
     {
         Task AddAsync(RentLocation location);
         Task UpdateAsync(RentLocation location);
-        Task DeleteAsync(RentLocation location);
         Task<RentLocation> GetByIdAsync(int id);
         Task<List<RentLocation>> GetAllAsync();
     }
