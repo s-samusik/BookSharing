@@ -17,8 +17,8 @@ namespace BookSharing.Data.EF
                 ServiceLifetime.Transient
             );
 
-            services.AddScoped<Dictionary<Type, BookSharingDbContext>>();
-            services.AddSingleton<DbContextFactory>();
+            //services.AddScoped<Dictionary<Type, BookSharingDbContext>>();
+            //services.AddSingleton<DbContextFactory>();
             
             return services;
         }

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.Data.EF", "infr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing", "domain\BookSharing\BookSharing.csproj", "{19F981C4-AD5C-4E0C-BE86-B3B6C7B7C12B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSharing.WEB", "presentation\BookSharing.WEB\BookSharing.WEB.csproj", "{42127AFC-F959-43D0-BC17-64DF0214C1F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.WEB", "presentation\BookSharing.WEB\BookSharing.WEB.csproj", "{42127AFC-F959-43D0-BC17-64DF0214C1F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

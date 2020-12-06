@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookSharing.Data.EF.Migrations
 {
     [DbContext(typeof(BookSharingDbContext))]
-    [Migration("20201202220911_Del_relation_author-publisher")]
-    partial class Del_relation_authorpublisher
+    [Migration("20201206205732_RentLocation")]
+    partial class RentLocation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -112,7 +112,7 @@ namespace BookSharing.Data.EF.Migrations
                     b.ToTable("Publishers");
                 });
 
-            modelBuilder.Entity("BookSharing.Data.RentLocationAddressDto", b =>
+            modelBuilder.Entity("BookSharing.Data.RentLocationDto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,38 +130,20 @@ namespace BookSharing.Data.EF.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Country")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Street")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RentLocationAddresses");
-                });
-
-            modelBuilder.Entity("BookSharing.Data.RentLocationDto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("RentLocationAddressId")
-                        .HasColumnType("int");
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RentLocationAddressId")
-                        .IsUnique();
 
                     b.ToTable("RentLocations");
                 });
@@ -188,8 +170,7 @@ namespace BookSharing.Data.EF.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -256,17 +237,6 @@ namespace BookSharing.Data.EF.Migrations
                     b.Navigation("Publisher");
                 });
 
-            modelBuilder.Entity("BookSharing.Data.RentLocationDto", b =>
-                {
-                    b.HasOne("BookSharing.Data.RentLocationAddressDto", "RentLocationAddress")
-                        .WithOne("RentLocation")
-                        .HasForeignKey("BookSharing.Data.RentLocationDto", "RentLocationAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RentLocationAddress");
-                });
-
             modelBuilder.Entity("BookSharing.Data.UserDto", b =>
                 {
                     b.HasOne("BookSharing.Data.BookDto", "Book")
@@ -297,11 +267,6 @@ namespace BookSharing.Data.EF.Migrations
             modelBuilder.Entity("BookSharing.Data.PublisherDto", b =>
                 {
                     b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("BookSharing.Data.RentLocationAddressDto", b =>
-                {
-                    b.Navigation("RentLocation");
                 });
 
             modelBuilder.Entity("BookSharing.Data.RentLocationDto", b =>

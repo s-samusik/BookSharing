@@ -6,9 +6,11 @@ namespace BookSharing.Data
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int RentLocationAddressId { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string Building { get; set; }
 
-        public virtual RentLocationAddressDto RentLocationAddress { get; set; }
         public virtual ICollection<BookDto> Books { get; set; }
     }
 }

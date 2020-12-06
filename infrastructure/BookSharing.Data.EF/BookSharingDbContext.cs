@@ -8,7 +8,6 @@ namespace BookSharing.Data.EF
         public DbSet<BookDto> Books { get; set; }
         public DbSet<GenreDto> Genres { get; set; }
         public DbSet<PublisherDto> Publishers { get; set; }
-        public DbSet<RentLocationAddressDto> RentLocationAddresses { get; set; }
         public DbSet<RentLocationDto> RentLocations { get; set; }
         public DbSet<UserDto> Users { get; set; }
         public DbSet<UserTypeDto> UserTypes { get; set; }
@@ -22,7 +21,6 @@ namespace BookSharing.Data.EF
             BuildBooks(modelBuilder);
             BuildGenres(modelBuilder);
             BuildPublisher(modelBuilder);
-            BuildRentLocationAddress(modelBuilder);
             BuildRentLocation(modelBuilder);
             BuildUser(modelBuilder);
             BuildUserType(modelBuilder);
@@ -76,30 +74,6 @@ namespace BookSharing.Data.EF
                       .IsRequired();
             });
         }
-        private void BuildRentLocationAddress(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<RentLocationAddressDto>(action =>
-            {
-                action.Property(dto => dto.Country)
-                      .HasMaxLength(50);
-
-                action.Property(dto => dto.City)
-                      .HasMaxLength(50)
-                      .IsRequired();
-
-                action.Property(dto => dto.Street)
-                      .HasMaxLength(50)
-                      .IsRequired();
-
-                action.Property(dto => dto.Building)
-                      .HasMaxLength(10)
-                      .IsRequired();
-
-                action.HasOne(dto => dto.RentLocation)
-                      .WithOne(dto => dto.RentLocationAddress)
-                      .IsRequired();
-            });
-        }
         private void BuildRentLocation(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RentLocationDto>(action =>
@@ -107,6 +81,24 @@ namespace BookSharing.Data.EF
                 action.Property(dto => dto.Name)
                       .HasMaxLength(50)
                       .IsRequired();
+
+                action.Property(dto => dto.Country)
+                      .HasMaxLength(50)
+                      .IsRequired();
+
+                action.Property(dto => dto.City)
+                      .HasMaxLength(50)
+                      .IsRequired();
+
+                action.Property(dto => dto.Street)
+                      .IsRequired();
+
+                action.Property(dto => dto.Building)
+                      .HasMaxLength(10)
+                      .IsRequired();
+                
+                action.HasMany(dto => dto.Books)
+                      .WithOne(dto => dto.RentLocation);
             });
 
         }
@@ -127,7 +119,6 @@ namespace BookSharing.Data.EF
                       .IsRequired();
 
                 action.Property(dto => dto.Password)
-                      .HasMaxLength(50)
                       .IsRequired();
 
                 action.HasOne(dto => dto.UserType)
