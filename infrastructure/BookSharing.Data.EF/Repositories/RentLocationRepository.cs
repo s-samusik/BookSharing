@@ -36,7 +36,7 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(RentLocationRepository));
             var dto = await context.RentLocations.FindAsync(id);
 
-            return RentLocation.Mapper.Map(dto);
+            return dto == null ? null : RentLocation.Mapper.Map(dto);
         }
 
         public async Task<List<RentLocation>> GetAllAsync()
