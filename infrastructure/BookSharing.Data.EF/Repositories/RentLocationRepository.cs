@@ -28,7 +28,20 @@ namespace BookSharing.Data.EF.Repositories
         public async Task UpdateAsync(RentLocation location)
         {
             var context = dbContextFactory.Create(typeof(RentLocationRepository));
+            var dto = RentLocation.Mapper.Map(location);
+            context.Entry(dto).State = EntityState.Modified;
+
             await context.SaveChangesAsync();
+        }
+        
+        public async Task DeleteAsync(RentLocation location)
+        {
+            var context = dbContextFactory.Create(typeof(RentLocationRepository));
+            var dto = RentLocation.Mapper.Map(location);
+
+            context.RentLocations.Remove(dto);
+            await context.SaveChangesAsync();
+
         }
 
         public async Task<RentLocation> GetByIdAsync(int id)
@@ -49,5 +62,6 @@ namespace BookSharing.Data.EF.Repositories
 
             return dtos.Select(RentLocation.Mapper.Map).ToList();
         }
+
     }
 }

@@ -21,7 +21,7 @@ namespace BookSharing.Models
         public string Country
         {
             get => dto.Country;
-            set 
+            set
             {
                 if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException(nameof(Country));
                 dto.Country = value.Trim();
@@ -76,10 +76,10 @@ namespace BookSharing.Models
                 return new RentLocationDto
                 {
                     Name = name,
-                    Country=country,
-                    City=city,
-                    Street=street,
-                    Building=building
+                    Country = country,
+                    City = city,
+                    Street = street,
+                    Building = building
                 };
             }
         }
