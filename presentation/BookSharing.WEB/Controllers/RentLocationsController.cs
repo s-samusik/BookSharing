@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BookSharing.Interfaces;
+using AutoMapper;
+using BookSharing.Data;
 using BookSharing.Models;
 
 namespace BookSharing.WEB.Controllers
@@ -11,58 +13,73 @@ namespace BookSharing.WEB.Controllers
     public class RentLocationsController : Controller
     {
         private readonly IRentLocationRepository rentLocationRepository;
+        private readonly IMapper mapper;
 
-        public RentLocationsController(IRentLocationRepository rentLocationRepository)
+        public RentLocationsController(IRentLocationRepository rentLocationRepository, IMapper mapper)
         {
             this.rentLocationRepository = rentLocationRepository;
-        }
-
-        // POST: api/locations/
-        [HttpPost("")]
-        public async Task<ActionResult<RentLocation>> CreateRentLocation(RentLocation location)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            await rentLocationRepository.AddAsync(location);
-            return Ok(location);
+            this.mapper = mapper;
         }
 
         // GET: api/locations/
         [HttpGet()]
-        public async Task<ActionResult<IEnumerable<RentLocation>>> GetAllRentLocationsAsync()
+        public async Task<ActionResult<IEnumerable<RentLocationDto>>> GetAllRentLocationsAsync()
         {
             var location = await rentLocationRepository.GetAllAsync();
-            return location;
+            var locationResult = mapper.Map<IEnumerable<RentLocationDto>>(location);
+
+            return Ok(locationResult);
         }
 
         // GET: api/locations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RentLocation>> GetRentLocationByIdAsync(int id)
+        public async Task<ActionResult<RentLocationDto>> GetRentLocationByIdAsync(int id)
         {
             var location = await rentLocationRepository.GetByIdAsync(id);
-            return location == null ? NotFound() : (ActionResult<RentLocation>)location;
+            if (location == null) return NotFound();
+
+            var locationResult = mapper.Map<RentLocationDto>(location);
+
+            return locationResult;
+        }
+
+        // POST: api/locations/
+        [HttpPost("")]
+        public async Task<ActionResult<RentLocationDto>> CreateRentLocation(RentLocationDto location)
+        {
+            if (location == null) return BadRequest();
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var locationResult = mapper.Map<RentLocation>(location);
+
+            await rentLocationRepository.AddAsync(locationResult);
+
+            return CreatedAtAction("GetRentLocationByIdAsync", new { id = location.Id }, location);
         }
 
         // PUT: api/locations/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRentLocationAsync(int id, RentLocation location)
+        public async Task<IActionResult> PutRentLocationAsync(int id, RentLocationDto location)
         {
-            if (id != location.Id)
-                return BadRequest();
+            if (id != location.Id) return BadRequest();
 
-            await rentLocationRepository.UpdateAsync(location);
-            return Ok();
+            var locationResult = mapper.Map<RentLocation>(location);
+
+            await rentLocationRepository.UpdateAsync(locationResult);
+            
+            return NoContent();
         }
+
         // DELETE: api/locations/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<RentLocation>> DeleteRentLocation(int id)
+        public async Task<ActionResult<RentLocationDto>> DeleteRentLocation(int id)
         {
             var location = await rentLocationRepository.GetByIdAsync(id);
-            if (location == null || location.Id != id)
-                return NotFound();
+
+            if (location == null || location.Id != id) return NotFound();
 
             await rentLocationRepository.DeleteAsync(location);
+
             return NoContent();
         }
     }
