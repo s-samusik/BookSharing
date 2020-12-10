@@ -1,4 +1,4 @@
-﻿using BookSharing.Models;
+﻿using BookSharing.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,11 +6,11 @@ namespace BookSharing.Interfaces
 {
     public interface IRentLocationRepository
     {
-        Task AddAsync(RentLocation location);
-        Task UpdateAsync(RentLocation location);
-        Task DeleteAsync(RentLocation location);
+        Task AddAsync(RentLocationDto location);
+        Task UpdateAsync(RentLocationDto location);
+        Task DeleteAsync(RentLocationDto location);
 
-        Task<RentLocation> GetByIdAsync(int id);
-        Task<List<RentLocation>> GetAllAsync();
+        Task<RentLocationDto> GetByIdAsync(int id);
+        Task<List<RentLocationDto>> GetAllAsync();
     }
 }

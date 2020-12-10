@@ -1,8 +1,5 @@
 ﻿using BookSharing.Interfaces;
-using BookSharing.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookSharing.Data.EF.Repositories
@@ -16,52 +13,29 @@ namespace BookSharing.Data.EF.Repositories
             this.dbContextFactory = dbContextFactory;
         }
 
-        public async Task AddAsync(RentLocation location)
+        public Task AddAsync(RentLocationDto location)
         {
-            var context = dbContextFactory.Create(typeof(RentLocationRepository));
-            var dto = RentLocation.DtoFactory.Create(location.Name, location.Country, location.City,
-                                                     location.Street, location.Building);
-            context.RentLocations.Add(dto);
-            await context.SaveChangesAsync();
+            throw new System.NotImplementedException();
         }
 
-        public async Task UpdateAsync(RentLocation location)
+        public Task DeleteAsync(RentLocationDto location)
         {
-            var context = dbContextFactory.Create(typeof(RentLocationRepository));
-            var dto = RentLocation.Mapper.Map(location);
-            context.Entry(dto).State = EntityState.Modified;
-
-            await context.SaveChangesAsync();
-        }
-        
-        public async Task DeleteAsync(RentLocation location)
-        {
-            var context = dbContextFactory.Create(typeof(RentLocationRepository));
-            var dto = RentLocation.Mapper.Map(location);
-
-            context.RentLocations.Remove(dto);
-            await context.SaveChangesAsync();
-
+            throw new System.NotImplementedException();
         }
 
-        public async Task<RentLocation> GetByIdAsync(int id)
+        public Task<List<RentLocationDto>> GetAllAsync()
         {
-            var context = dbContextFactory.Create(typeof(RentLocationRepository));
-            var dto = await context.RentLocations.FindAsync(id);
-
-            return dto == null ? null : RentLocation.Mapper.Map(dto);
+            throw new System.NotImplementedException();
         }
 
-        public async Task<List<RentLocation>> GetAllAsync()
+        public Task<RentLocationDto> GetByIdAsync(int id)
         {
-            var context = dbContextFactory.Create(typeof(RentLocationRepository));
-
-            var dtos = await context.RentLocations
-                                    .AsNoTracking()
-                                    .ToListAsync();
-
-            return dtos.Select(RentLocation.Mapper.Map).ToList();
+            throw new System.NotImplementedException();
         }
 
+        public Task UpdateAsync(RentLocationDto location)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
