@@ -1,4 +1,6 @@
 ﻿using BookSharing.Interfaces;
+using BookSharing.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,29 +15,47 @@ namespace BookSharing.Data.EF.Repositories
             this.dbContextFactory = dbContextFactory;
         }
 
-        public Task AddAsync(RentLocationDto location)
+        public async Task AddAsync(RentLocation location)
         {
-            throw new System.NotImplementedException();
+            var context = dbContextFactory.Create(typeof(RentLocationRepository));
+
+            await context.RentLocations.AddAsync(location);
+            await context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(RentLocationDto location)
+        public async Task UpdateAsync(RentLocation location)
         {
-            throw new System.NotImplementedException();
+            var context = dbContextFactory.Create(typeof(RentLocationRepository));
+
+            context.Entry(location).State = EntityState.Modified;
+            await context.SaveChangesAsync();
         }
 
-        public Task<List<RentLocationDto>> GetAllAsync()
+        public async Task DeleteAsync(RentLocation location)
         {
-            throw new System.NotImplementedException();
+            var context = dbContextFactory.Create(typeof(RentLocationRepository));
+
+            context.RentLocations.Remove(location);
+            await context.SaveChangesAsync();
         }
 
-        public Task<RentLocationDto> GetByIdAsync(int id)
+        public async Task<List<RentLocation>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            var context = dbContextFactory.Create(typeof(RentLocationRepository));
+
+            var locations = await context.RentLocations
+                                      .AsNoTracking()
+                                      .ToListAsync();
+            return locations;
         }
 
-        public Task UpdateAsync(RentLocationDto location)
+        public async Task<RentLocation> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var context = dbContextFactory.Create(typeof(RentLocationRepository));
+
+            var location = await context.RentLocations
+                                        .FindAsync(id);
+            return location;
         }
     }
 }
