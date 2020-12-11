@@ -1,61 +1,30 @@
-﻿using BookSharing.Data;
-using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BookSharing.Models
 {
     public class RentLocation
     {
-        private readonly RentLocationDto dto;
+        [Key]
+        public int Id { get; set; }
 
-        #region Properties
-        public int Id => dto.Id;
-        public string Name
-        {
-            get => dto.Name;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException(nameof(Name));
-                dto.Name = value.Trim();
-            }
-        }
-        public RentLocationAddress Address
-        {
-            get => new RentLocationAddress(dto.RentLocationAddress);
-            set
-            {
-                if (value == null) throw new ArgumentNullException(nameof(RentLocationAddress));
+        [Required(ErrorMessage = "Name is required")]
+        [StringLength(50, ErrorMessage = "Name can't be longer than 50 characters")]
+        public string Name { get; set; }
 
-                dto.RentLocationAddress.Id = value.Id;
-            }
-        }
-        #endregion
+        [Required(ErrorMessage = "Country is required")]
+        [StringLength(50, ErrorMessage = "Country can't be longer than 50 characters")]
+        public string Country { get; set; }
 
-        internal RentLocation(RentLocationDto dto)
-        {
-            this.dto = dto;
-        }
+        [Required(ErrorMessage = "City is required")]
+        [StringLength(50, ErrorMessage = "City can't be longer than 50 characters")]
+        public string City { get; set; }
 
-        public static class DtoFactory
-        {
-            public static RentLocationDto Create(string name, RentLocationAddressDto address)
-            {
-                #region Checking incoming parameters
-                if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException(nameof(name));
-                if (address == null) throw new ArgumentNullException(nameof(address));
-                #endregion
+        [Required(ErrorMessage = "Street is required")]
+        [StringLength(50, ErrorMessage = "Street can't be longer than 50 characters")]
+        public string Street { get; set; }
 
-                return new RentLocationDto
-                {
-                    Name = name,
-                    RentLocationAddress = address,
-                };
-            }
-        }
-
-        public static class Mapper
-        {
-            public static RentLocation Map(RentLocationDto dto) => new RentLocation(dto);
-            public static RentLocationDto Map(RentLocation domain) => domain.dto;
-        }
+        [Required(ErrorMessage = "Building is required")]
+        [StringLength(10, ErrorMessage = "Building can't be longer than 10 characters")]
+        public string Building { get; set; }
     }
 }
