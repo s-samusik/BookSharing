@@ -53,8 +53,7 @@ namespace BookSharing.Data.EF.Repositories
         {
             var context = dbContextFactory.Create(typeof(RentLocationRepository));
 
-            var location = await context.RentLocations
-                                        .FindAsync(id);
+            var location = await context.RentLocations.FindAsync(id);
             return location;
         }
     }
