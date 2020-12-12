@@ -19,8 +19,22 @@ namespace BookSharing.Data.EF.Repositories
         public async Task AddAsync(User user)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
+            var userType = await context.UserTypes
+                                        .Where(x => x.Name == user.UserType.Name)
+                                        .FirstOrDefaultAsync();
 
-            await context.Users.AddAsync(user);
+            if (userType == null) userType = user.UserType;
+            
+            User newUser = new User
+            {
+                Nickname = user.Nickname,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Password = user.Password,
+                UserType = userType
+            };
+
+            await context.Users.AddAsync(newUser);
             await context.SaveChangesAsync();
         }
 
@@ -29,6 +43,8 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             context.Entry(user).State = EntityState.Modified;
+            context.Entry(user.UserType).State = EntityState.Modified;
+
             await context.SaveChangesAsync();
         }
 

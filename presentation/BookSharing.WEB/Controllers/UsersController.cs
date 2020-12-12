@@ -48,7 +48,7 @@ namespace BookSharing.WEB.Controllers
 
             await userRepository.UpdateAsync(userResult);
 
-            return NoContent();
+            return Ok();
         }
 
         // DELETE: api/users/5
