@@ -23,6 +23,7 @@ namespace BookSharing.Data.EF
             services.AddSingleton<DbContextFactory>();
 
             services.AddSingleton<IRentLocationRepository, RentLocationRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
 
             return services;
         }

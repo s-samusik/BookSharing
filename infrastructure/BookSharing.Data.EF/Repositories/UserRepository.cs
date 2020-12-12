@@ -56,7 +56,10 @@ namespace BookSharing.Data.EF.Repositories
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
 
-            var user = await context.Users.FindAsync(id);
+            var user = await context.Users
+                                    .AsNoTracking()
+                                    .Include(x => x.UserType)
+                                    .FirstOrDefaultAsync(x => x.Id == id);
             return user;
         }
 

@@ -21,31 +21,9 @@ namespace BookSharing.WEB.Controllers
             this.mapper = mapper;
         }
 
-        // GET: api/locations/
-        [HttpGet()]
-        public async Task<ActionResult<IEnumerable<RentLocationDto>>> GetAllRentLocationsAsync()
-        {
-            var location = await rentLocationRepository.GetAllAsync();
-            var locationResult = mapper.Map<IEnumerable<RentLocationDto>>(location);
-
-            return Ok(locationResult);
-        }
-
-        // GET: api/locations/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RentLocationDto>> GetRentLocationByIdAsync(int id)
-        {
-            var location = await rentLocationRepository.GetByIdAsync(id);
-            if (location == null) return NotFound();
-
-            var locationResult = mapper.Map<RentLocationDto>(location);
-
-            return locationResult;
-        }
-
         // POST: api/locations/
         [HttpPost("")]
-        public async Task<ActionResult<RentLocationDto>> CreateRentLocation(RentLocationDto location)
+        public async Task<ActionResult<RentLocationDto>> CreateRentLocationAsync(RentLocationDto location)
         {
             if (location == null) return BadRequest();
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -66,13 +44,13 @@ namespace BookSharing.WEB.Controllers
             var locationResult = mapper.Map<RentLocation>(location);
 
             await rentLocationRepository.UpdateAsync(locationResult);
-            
+
             return NoContent();
         }
 
         // DELETE: api/locations/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<RentLocationDto>> DeleteRentLocation(int id)
+        public async Task<ActionResult<RentLocationDto>> DeleteRentLocationAsync(int id)
         {
             var location = await rentLocationRepository.GetByIdAsync(id);
 
@@ -81,6 +59,29 @@ namespace BookSharing.WEB.Controllers
             await rentLocationRepository.DeleteAsync(location);
 
             return NoContent();
+        }
+
+
+        // GET: api/locations/
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<RentLocationDto>>> GetAllRentLocationsAsync()
+        {
+            var locations = await rentLocationRepository.GetAllAsync();
+            var locationsResult = mapper.Map<IEnumerable<RentLocationDto>>(locations);
+
+            return Ok(locationsResult);
+        }
+
+        // GET: api/locations/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RentLocationDto>> GetRentLocationByIdAsync(int id)
+        {
+            var location = await rentLocationRepository.GetByIdAsync(id);
+            if (location == null) return NotFound();
+
+            var locationResult = mapper.Map<RentLocationDto>(location);
+
+            return locationResult;
         }
     }
 }

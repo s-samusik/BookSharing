@@ -10,6 +10,10 @@ namespace BookSharing.WEB
         {
             CreateMap<RentLocationDto, RentLocation>();
             CreateMap<RentLocation, RentLocationDto>();
+            CreateMap<UserDto, User>();
+            CreateMap<UserTypeDto, UserType>();
+            CreateMap<User, UserDto>();
+            CreateMap<UserType, UserTypeDto>();
         }
     }
 }
