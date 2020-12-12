@@ -13,5 +13,17 @@ namespace BookSharing.Data.EF
         public BookSharingDbContext(DbContextOptions<BookSharingDbContext> options) : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            BuildUserType(modelBuilder);
+        }
+
+        private void BuildUserType(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserType>(action =>
+            {
+                action.HasIndex(dto => dto.Name).IsUnique();
+            });
+        }
     }
 }
