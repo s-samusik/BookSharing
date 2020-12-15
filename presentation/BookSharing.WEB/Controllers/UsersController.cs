@@ -3,9 +3,7 @@ using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookSharing.WEB.Controllers
@@ -64,7 +62,6 @@ namespace BookSharing.WEB.Controllers
             return NoContent();
         }
 
-
         // GET: api/users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUserByIdAsync(int id)
@@ -74,7 +71,7 @@ namespace BookSharing.WEB.Controllers
 
             var userResult = mapper.Map<UserDto>(user);
 
-            return userResult;
+            return Ok(userResult);
         }
 
         //GET: api/users/by_query/"nickname or email or phone number"

@@ -12,7 +12,7 @@ namespace BookSharing.Interfaces
 
         Task<Book> GetByIdAsync(int id);
         Task<List<Book>> GetAllByQueryAsync(string query);
-        Task<List<Genre>> GetAllBookGenres();
+        Task<List<Genre>> GetAllBookGenresAsync();
         Task<Genre> GetBookGenreByQueryAsync(string query);
         Task<List<Book>> GetAllByGenreAsync(Genre genre);
     }

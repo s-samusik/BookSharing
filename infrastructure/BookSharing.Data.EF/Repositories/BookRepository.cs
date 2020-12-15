@@ -99,7 +99,7 @@ namespace BookSharing.Data.EF.Repositories
             return books;
         }
 
-        public async Task<List<Genre>> GetAllBookGenres()
+        public async Task<List<Genre>> GetAllBookGenresAsync()
         {
             var context = dbContextFactory.Create(typeof(BookRepository));
             var genres = await context.Genres.ToListAsync();

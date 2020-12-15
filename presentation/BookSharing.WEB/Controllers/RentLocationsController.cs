@@ -61,7 +61,6 @@ namespace BookSharing.WEB.Controllers
             return NoContent();
         }
 
-
         // GET: api/locations/
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<RentLocationDto>>> GetAllRentLocationsAsync()
