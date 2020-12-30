@@ -5,5 +5,5 @@ The main idea is a decentralized book rental network. Books can be rented at one
 Books can be booked or viewed when and where they will be returned. You can also view a list of books, view a map of rental locations, view reports, etc.
 
 ## Stack
-Frontend: React.JS | Redux | Bootstrap   
+Frontend: React.JS | Bootstrap   
 Backend: ASP.NET core | C# | MSSQL
