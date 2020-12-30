@@ -20,7 +20,8 @@ namespace BookSharing.Data.EF.Repositories
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
             var userType = await context.UserTypes
-                                        .Where(x => x.Name == user.UserType.Name)
+                                        .AsNoTracking()
+                                        .Where(x => x.Id == user.UserType.Id)
                                         .FirstOrDefaultAsync();
 
             if (userType == null) userType = user.UserType;
@@ -63,7 +64,7 @@ namespace BookSharing.Data.EF.Repositories
             var users = await context.Users
                                      .AsNoTracking()
                                      .Include(x => x.UserType)
-                                     .Where(x => x.UserType.Name == type.Name)
+                                     .Where(x => x.UserType.Id == type.Id)
                                      .ToListAsync();
             return users;
         }
@@ -75,7 +76,8 @@ namespace BookSharing.Data.EF.Repositories
             var user = await context.Users
                                     .AsNoTracking()
                                     .Include(x => x.UserType)
-                                    .FirstOrDefaultAsync(x => x.Id == id);
+                                    .Where(x => x.Id == id)
+                                    .FirstOrDefaultAsync();
             return user;
         }
 
@@ -86,9 +88,9 @@ namespace BookSharing.Data.EF.Repositories
             var users = await context.Users
                                      .AsNoTracking()
                                      .Include(x => x.UserType)
-                                     .Where(a => a.Nickname.Contains(query)
-                                              || a.PhoneNumber.Contains(query)
-                                              || a.Email.Contains(query))
+                                     .Where(x => x.Nickname.Contains(query)
+                                              || x.PhoneNumber.Contains(query)
+                                              || x.Email.Contains(query))
                                      .ToListAsync();
             return users;
         }
@@ -99,7 +101,8 @@ namespace BookSharing.Data.EF.Repositories
 
             var userType = await context.UserTypes
                                         .AsNoTracking()
-                                        .FirstOrDefaultAsync(x => x.Name.Contains(query));
+                                        .Where(x => x.Name.Contains(query))
+                                        .FirstOrDefaultAsync();
             return userType;
         }
     }

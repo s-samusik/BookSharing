@@ -8,7 +8,10 @@ namespace BookSharing.Data.EF
         public DbSet<RentLocation> RentLocations { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
-
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         public BookSharingDbContext(DbContextOptions<BookSharingDbContext> options) : base(options)
         {

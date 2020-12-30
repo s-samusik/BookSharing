@@ -3,14 +3,16 @@ using BookSharing.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookSharing.Data.EF.Migrations
 {
     [DbContext(typeof(BookSharingDbContext))]
-    partial class BookSharingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201213212346_fix_book")]
+    partial class fix_book
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

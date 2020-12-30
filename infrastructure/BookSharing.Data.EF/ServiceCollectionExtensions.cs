@@ -24,6 +24,7 @@ namespace BookSharing.Data.EF
 
             services.AddSingleton<IRentLocationRepository, RentLocationRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IBookRepository,BookRepository>();
 
             return services;
         }
