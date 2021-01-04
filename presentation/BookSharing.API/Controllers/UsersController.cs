@@ -73,8 +73,8 @@ namespace BookSharing.API.Controllers
             return Ok(userResult);
         }
 
-        //GET: api/users/by_query/"nickname or email or phone number"
-        [HttpGet("by_query/{query}")]
+        //GET: api/users/search/"nickname or email or phone number"
+        [HttpGet("search/{query}")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersByQueryAsync(string query)
         {
             var users = await userRepository.GetAllByQueryAsync(query);

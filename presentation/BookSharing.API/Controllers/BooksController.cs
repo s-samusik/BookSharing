@@ -73,8 +73,8 @@ namespace BookSharing.API.Controllers
             return Ok(bookResult);
         }
 
-        //GET: api/books/by_query/"title or author or publisher"
-        [HttpGet("by_query/{query}")]
+        //GET: api/books/search/"title or author or publisher"
+        [HttpGet("search/{query}")]
         public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooksByQueryAsync(string query)
         {
             var books = await bookRepository.GetAllByQueryAsync(query);
