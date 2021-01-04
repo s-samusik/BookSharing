@@ -13,9 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.Data.EF", "infr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing", "domain\BookSharing\BookSharing.csproj", "{19F981C4-AD5C-4E0C-BE86-B3B6C7B7C12B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.WEB", "presentation\BookSharing.WEB\BookSharing.WEB.csproj", "{42127AFC-F959-43D0-BC17-64DF0214C1F2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookSharing.API", "presentation\BookSharing.API\BookSharing.API.csproj", "{96DFFCBF-2858-4AB5-8E9B-B4E38B1D7388}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookSharing.API", "presentation\BookSharing.API\BookSharing.API.csproj", "{96DFFCBF-2858-4AB5-8E9B-B4E38B1D7388}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{19F981C4-AD5C-4E0C-BE86-B3B6C7B7C12B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F981C4-AD5C-4E0C-BE86-B3B6C7B7C12B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F981C4-AD5C-4E0C-BE86-B3B6C7B7C12B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42127AFC-F959-43D0-BC17-64DF0214C1F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42127AFC-F959-43D0-BC17-64DF0214C1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42127AFC-F959-43D0-BC17-64DF0214C1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42127AFC-F959-43D0-BC17-64DF0214C1F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{96DFFCBF-2858-4AB5-8E9B-B4E38B1D7388}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{96DFFCBF-2858-4AB5-8E9B-B4E38B1D7388}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96DFFCBF-2858-4AB5-8E9B-B4E38B1D7388}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,7 +40,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{076FFB0E-BCE9-475E-8D85-B22E85BB163E} = {C60C41A6-9EB6-4068-8B44-31CC8C287237}
 		{19F981C4-AD5C-4E0C-BE86-B3B6C7B7C12B} = {AE36EBD4-7369-40B4-B5BE-185C0F195A31}
-		{42127AFC-F959-43D0-BC17-64DF0214C1F2} = {A343CE8E-8B8A-457D-A654-DEFD8D010D56}
 		{96DFFCBF-2858-4AB5-8E9B-B4E38B1D7388} = {A343CE8E-8B8A-457D-A654-DEFD8D010D56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
