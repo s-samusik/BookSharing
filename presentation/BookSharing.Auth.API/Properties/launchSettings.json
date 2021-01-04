@@ -1,0 +1,8 @@
+﻿{
+  "profiles": {
+    "BookSharing.Auth.API": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:5150/"
+    }
+  }
+}
