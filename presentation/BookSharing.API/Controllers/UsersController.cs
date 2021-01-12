@@ -77,7 +77,7 @@ namespace BookSharing.API.Controllers
         [HttpGet("search/{query}")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersByQueryAsync(string query)
         {
-            var users = await userRepository.GetAllByQueryAsync(query);
+            var users = await userRepository.GetAllByRequestAsync(query);
             var usersResult = mapper.Map<IEnumerable<UserDto>>(users);
 
             return Ok(usersResult);
@@ -87,7 +87,7 @@ namespace BookSharing.API.Controllers
         [HttpGet("by_type/{userType}")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersByTypeAsync(string userType)
         {
-            var type = await userRepository.GetUserTypeByQueryAsync(userType);
+            var type = await userRepository.GetUserTypeByRequestAsync(userType);
 
             if (type == null) return NotFound(type);
 

@@ -11,9 +11,9 @@ namespace BookSharing.Interfaces
         Task DeleteAsync(Book book);
 
         Task<Book> GetByIdAsync(int id);
-        Task<List<Book>> GetAllByQueryAsync(string query);
+        Task<List<Book>> GetAllByRequestAsync(string request);
         Task<List<Genre>> GetAllBookGenresAsync();
-        Task<Genre> GetBookGenreByQueryAsync(string query);
+        Task<Genre> GetBookGenreByRequestAsync(string request);
         Task<List<Book>> GetAllByGenreAsync(Genre genre);
     }
 }

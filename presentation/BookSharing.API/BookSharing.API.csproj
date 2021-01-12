@@ -12,9 +12,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\domain\BookSharing.Auth\BookSharing.Auth.csproj" />
     <ProjectReference Include="..\..\domain\BookSharing\BookSharing.csproj" />
     <ProjectReference Include="..\..\infrastructure\BookSharing.Data.EF\BookSharing.Data.EF.csproj" />
   </ItemGroup>
