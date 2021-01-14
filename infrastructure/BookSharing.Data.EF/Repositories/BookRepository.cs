@@ -83,7 +83,7 @@ namespace BookSharing.Data.EF.Repositories
             return book;
         }
 
-        public async Task<List<Book>> GetAllByQueryAsync(string query)
+        public async Task<List<Book>> GetAllByRequestAsync(string query)
         {
             var context = dbContextFactory.Create(typeof(BookRepository));
 
@@ -107,7 +107,7 @@ namespace BookSharing.Data.EF.Repositories
             return genres;
         }
 
-        public async Task<Genre> GetBookGenreByQueryAsync(string query)
+        public async Task<Genre> GetBookGenreByRequestAsync(string query)
         {
             var context = dbContextFactory.Create(typeof(BookRepository));
             var genre = await context.Genres

@@ -25,7 +25,7 @@ namespace BookSharing.Data.EF.Repositories
                                         .FirstOrDefaultAsync();
 
             if (userType == null) userType = user.UserType;
-            
+
             User newUser = new User
             {
                 Nickname = user.Nickname,
@@ -81,7 +81,7 @@ namespace BookSharing.Data.EF.Repositories
             return user;
         }
 
-        public async Task<List<User>> GetAllByQueryAsync(string query)
+        public async Task<List<User>> GetAllByRequestAsync(string query)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
 
@@ -95,7 +95,22 @@ namespace BookSharing.Data.EF.Repositories
             return users;
         }
 
-        public async Task<UserType> GetUserTypeByQueryAsync(string query)
+        public async Task<User> GetByRequestAsync(string login, string password)
+        {
+            var context = dbContextFactory.Create(typeof(UserRepository));
+
+            var user = await context.Users
+                                    .AsNoTracking()
+                                    .Include(x => x.UserType)
+                                    .Where(x => x.Nickname == login
+                                             || x.PhoneNumber == login
+                                             || x.Email == login)
+                                    .Where(x => x.Password == password)
+                                    .SingleOrDefaultAsync();
+            return user;
+        }
+
+        public async Task<UserType> GetUserTypeByRequestAsync(string query)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
 

@@ -2,6 +2,7 @@
 using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace BookSharing.API.Controllers
 
         // POST: api/locations/
         [HttpPost("")]
+        [Authorize]
         public async Task<ActionResult<RentLocationDto>> CreateRentLocationAsync(RentLocationDto location)
         {
             if (location == null) return BadRequest();
@@ -37,6 +39,7 @@ namespace BookSharing.API.Controllers
 
         // PUT: api/locations/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutRentLocationAsync(int id, RentLocationDto location)
         {
             if (id != location.Id) return BadRequest();
@@ -50,6 +53,7 @@ namespace BookSharing.API.Controllers
 
         // DELETE: api/locations/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<RentLocationDto>> DeleteRentLocationAsync(int id)
         {
             var location = await rentLocationRepository.GetByIdAsync(id);
