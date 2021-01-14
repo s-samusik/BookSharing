@@ -2,6 +2,7 @@
 using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace BookSharing.API.Controllers
 
         // POST: api/books/
         [HttpPost("")]
+        [Authorize]
         public async Task<ActionResult<BookDto>> CreateBookAsync(BookDto book)
         {
             if (book == null) return BadRequest();
@@ -37,6 +39,7 @@ namespace BookSharing.API.Controllers
 
         // PUT: api/books/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutBookAsync(int id, BookDto book)
         {
             if (id != book.Id) return BadRequest();
@@ -50,6 +53,7 @@ namespace BookSharing.API.Controllers
 
         // DELETE: api/books/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<BookDto>> DeleteBookAsync(int id)
         {
             var book = await bookRepository.GetByIdAsync(id);
@@ -63,6 +67,7 @@ namespace BookSharing.API.Controllers
 
         // GET: api/books/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<BookDto>> GetBookByIdAsync(int id)
         {
             var book = await bookRepository.GetByIdAsync(id);

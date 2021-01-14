@@ -16,7 +16,7 @@ namespace BookSharing.Auth
         public int TokenLifeTime { get; set; } // in seconds
 
 
-        private SymmetricSecurityKey GetSymmetricSecurityKey()
+        public SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Secret));
         }
