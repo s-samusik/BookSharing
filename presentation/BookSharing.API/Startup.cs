@@ -10,6 +10,9 @@ using System;
 using BookSharing.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.IO;
 
 namespace BookSharing.API
 {
@@ -62,6 +65,17 @@ namespace BookSharing.API
                     ValidateIssuerSigningKey = true,
                 };
             });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v2.0.1", new OpenApiInfo { Title = "Booksharing",
+                                                         Description = "ASP.NET Core web api",
+                                                         Version = "v2.0.1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -70,6 +84,14 @@ namespace BookSharing.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v2.0.1/swagger.json", "Booksharing");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseRouting();
 
