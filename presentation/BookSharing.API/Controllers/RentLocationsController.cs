@@ -22,6 +22,11 @@ namespace BookSharing.API.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Add new location to database.
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         // POST: api/locations/
         [HttpPost("")]
         [Authorize]
@@ -37,6 +42,12 @@ namespace BookSharing.API.Controllers
             return CreatedAtAction("GetRentLocationByIdAsync", new { id = location.Id }, location);
         }
 
+        /// <summary>
+        /// Change existing location from database.
+        /// </summary>
+        /// <param name="id">existing location.</param>
+        /// <param name="location"></param>
+        /// <returns></returns>
         // PUT: api/locations/5
         [HttpPut("{id}")]
         [Authorize]
@@ -51,6 +62,11 @@ namespace BookSharing.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Removes existing location from database.
+        /// </summary>
+        /// <param name="id">existing location.</param>
+        /// <returns></returns>
         // DELETE: api/locations/5
         [HttpDelete("{id}")]
         [Authorize]
@@ -65,6 +81,10 @@ namespace BookSharing.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Return all rent locations from database.
+        /// </summary>
+        /// <returns></returns>
         // GET: api/locations/
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<RentLocationDto>>> GetAllRentLocationsAsync()
@@ -75,6 +95,11 @@ namespace BookSharing.API.Controllers
             return Ok(locationsResult);
         }
 
+        /// <summary>
+        /// Return rent location from database with the specified id.
+        /// </summary>
+        /// <param name="id">existing location.</param>
+        /// <returns></returns>
         // GET: api/locations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RentLocationDto>> GetRentLocationByIdAsync(int id)

@@ -20,13 +20,11 @@ namespace BookSharing.API.Controllers
             this.authOptions = authOptions;
         }
 
-        //GET: api/auth/test
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            return Ok("test - ok");
-        }
-
+        /// <summary>
+        /// Accept login and password and return a token if the user is found. The login can be nickname, mail or phone number.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         // POST: api/auth/login
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody] SignInDto request)

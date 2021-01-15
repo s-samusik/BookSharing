@@ -22,6 +22,11 @@ namespace BookSharing.API.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Add new book to database.
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
         // POST: api/books/
         [HttpPost("")]
         [Authorize]
@@ -37,6 +42,12 @@ namespace BookSharing.API.Controllers
             return CreatedAtAction("GetBookByIdAsync", new { id = book.Id }, book);
         }
 
+        /// <summary>
+        /// Change existing book from database.
+        /// </summary>
+        /// <param name="id">existing book</param>
+        /// <param name="book"></param>
+        /// <returns></returns>
         // PUT: api/books/5
         [HttpPut("{id}")]
         [Authorize]
@@ -51,6 +62,11 @@ namespace BookSharing.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Remove existing book from database.
+        /// </summary>
+        /// <param name="id">existing book.</param>
+        /// <returns></returns>
         // DELETE: api/books/5
         [HttpDelete("{id}")]
         [Authorize]
@@ -65,6 +81,11 @@ namespace BookSharing.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Return book from database with the specified id.
+        /// </summary>
+        /// <param name="id">existing book.</param>
+        /// <returns></returns>
         // GET: api/books/5
         [HttpGet("{id}")]
         [Authorize]
@@ -78,16 +99,25 @@ namespace BookSharing.API.Controllers
             return Ok(bookResult);
         }
 
+        /// <summary>
+        /// Return all books that match the request.
+        /// </summary>
+        /// <param name="request">title of book or author or publisher.</param>
+        /// <returns></returns>
         //GET: api/books/search/"title or author or publisher"
-        [HttpGet("search/{query}")]
-        public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooksByQueryAsync(string query)
+        [HttpGet("search/{request}")]
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooksByRequestAsync(string request)
         {
-            var books = await bookRepository.GetAllByRequestAsync(query);
+            var books = await bookRepository.GetAllByRequestAsync(request);
             var booksResult = mapper.Map<IEnumerable<BookDto>>(books);
 
             return Ok(booksResult);
         }
 
+        /// <summary>
+        /// Return all book genres from database.
+        /// </summary>
+        /// <returns></returns>
         //GET: api/books/genres/
         [HttpGet("genres")]
         public async Task<ActionResult<IEnumerable<GenreDto>>> GetAllBookGenresAsync()
@@ -98,6 +128,11 @@ namespace BookSharing.API.Controllers
             return Ok(genresResult);
         }
 
+        /// <summary>
+        /// Return all books of concrete book genre.
+        /// </summary>
+        /// <param name="bookGenre">genre of book</param>
+        /// <returns></returns>
         //GET: api/books/by_genre/"book genre"
         [HttpGet("by_genre/{bookGenre}")]
         public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooksByGenreAsync(string bookGenre)
