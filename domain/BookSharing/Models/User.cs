@@ -6,24 +6,24 @@ namespace BookSharing.Models
     {
         [Key]
         public int Id { get; set; }
-        
-        [Required(ErrorMessage = "Nickname is required")]
-        [StringLength(50, ErrorMessage = "Nickname can't be longer than 50 characters")]
+
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Nickname { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        [StringLength(50, ErrorMessage = "Email can't be longer than 50 characters")]
+        [Required]
+        [StringLength(50, MinimumLength = 7)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "PhoneNumber is required")]
-        [StringLength(20, ErrorMessage = "PhoneNumber can't be longer than 20 characters")]
+        [Required]
+        [StringLength(20, MinimumLength = 5)]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
-        [StringLength(50, ErrorMessage = "Password can't be longer than 50 characters")]
+        [Required]
+        [StringLength(50, MinimumLength = 5)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "UserType is required")]
+        [Required]
         public virtual UserType UserType { get; set; }
     }
 }
