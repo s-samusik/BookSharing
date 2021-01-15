@@ -2,6 +2,7 @@
   "profiles": {
     "BookSharing.API": {
       "commandName": "Project",
+      "launchBrowser": true,
       "applicationUrl": "http://localhost:5100/"
     }
   }

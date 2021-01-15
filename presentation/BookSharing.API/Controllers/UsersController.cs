@@ -22,6 +22,11 @@ namespace BookSharing.API.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Add new user to database.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         // POST: api/users/
         [HttpPost("")]
         [Authorize]
@@ -37,6 +42,12 @@ namespace BookSharing.API.Controllers
             return CreatedAtAction("GetUserByIdAsync", new { id = user.Id }, user);
         }
 
+        /// <summary>
+        /// Change existing user from database.
+        /// </summary>
+        /// <param name="id">existing user</param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         // PUT: api/users/5
         [HttpPut("{id}")]
         [Authorize]
@@ -51,6 +62,11 @@ namespace BookSharing.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Remove existing user from database.
+        /// </summary>
+        /// <param name="id">existing user</param>
+        /// <returns></returns>
         // DELETE: api/users/5
         [HttpDelete("{id}")]
         [Authorize]
@@ -65,6 +81,11 @@ namespace BookSharing.API.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Return user from database with the specified id.
+        /// </summary>
+        /// <param name="id">existing user</param>
+        /// <returns></returns>
         // GET: api/users/5
         [HttpGet("{id}")]
         [Authorize]
@@ -78,16 +99,26 @@ namespace BookSharing.API.Controllers
             return Ok(userResult);
         }
 
+        /// <summary>
+        /// Return all users that match the request.
+        /// </summary>
+        /// <param name="request">nickname or email or phone number</param>
+        /// <returns></returns>
         //GET: api/users/search/"nickname or email or phone number"
-        [HttpGet("search/{query}")]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersByQueryAsync(string query)
+        [HttpGet("search/{request}")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersByRequestAsync(string request)
         {
-            var users = await userRepository.GetAllByRequestAsync(query);
+            var users = await userRepository.GetAllByRequestAsync(request);
             var usersResult = mapper.Map<IEnumerable<UserDto>>(users);
 
             return Ok(usersResult);
         }
 
+        /// <summary>
+        /// Return all users of concrete type.
+        /// </summary>
+        /// <param name="userType">user type</param>
+        /// <returns></returns>
         //GET: api/users/by_type/"user type"
         [HttpGet("by_type/{userType}")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersByTypeAsync(string userType)

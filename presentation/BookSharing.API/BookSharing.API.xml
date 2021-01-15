@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BookSharing.API</name>
+    </assembly>
+    <members>
+        <member name="M:BookSharing.API.Controllers.AuthController.LoginAsync(BookSharing.Auth.Data.SignInDto)">
+            <summary>
+            Accept login and password and return a token if the user is found. The login can be nickname, mail or phone number.
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.CreateBookAsync(BookSharing.Data.BookDto)">
+            <summary>
+            Add new book to database.
+            </summary>
+            <param name="book"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.PutBookAsync(System.Int32,BookSharing.Data.BookDto)">
+            <summary>
+            Change existing book from database.
+            </summary>
+            <param name="id">existing book</param>
+            <param name="book"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.DeleteBookAsync(System.Int32)">
+            <summary>
+            Remove existing book from database.
+            </summary>
+            <param name="id">existing book.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.GetBookByIdAsync(System.Int32)">
+            <summary>
+            Return book from database with the specified id.
+            </summary>
+            <param name="id">existing book.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.GetAllBooksByRequestAsync(System.String)">
+            <summary>
+            Return all books that match the request.
+            </summary>
+            <param name="request">title of book or author or publisher.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.GetAllBookGenresAsync">
+            <summary>
+            Return all book genres from database.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.GetAllBooksByGenreAsync(System.String)">
+            <summary>
+            Return all books of concrete book genre.
+            </summary>
+            <param name="bookGenre">genre of book</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.CreateRentLocationAsync(BookSharing.Data.RentLocationDto)">
+            <summary>
+            Add new location to database.
+            </summary>
+            <param name="location"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.PutRentLocationAsync(System.Int32,BookSharing.Data.RentLocationDto)">
+            <summary>
+            Change existing location from database.
+            </summary>
+            <param name="id">existing location.</param>
+            <param name="location"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.DeleteRentLocationAsync(System.Int32)">
+            <summary>
+            Removes existing location from database.
+            </summary>
+            <param name="id">existing location.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.GetAllRentLocationsAsync">
+            <summary>
+            Return all rent locations from database.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.GetRentLocationByIdAsync(System.Int32)">
+            <summary>
+            Return rent location from database with the specified id.
+            </summary>
+            <param name="id">existing location.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.CreateUserAsync(BookSharing.Data.UserDto)">
+            <summary>
+            Add new user to database.
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.PutUserAsync(System.Int32,BookSharing.Data.UserDto)">
+            <summary>
+            Change existing user from database.
+            </summary>
+            <param name="id">existing user</param>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.DeleteUserAsync(System.Int32)">
+            <summary>
+            Remove existing user from database.
+            </summary>
+            <param name="id">existing user</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.GetUserByIdAsync(System.Int32)">
+            <summary>
+            Return user from database with the specified id.
+            </summary>
+            <param name="id">existing user</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.GetAllUsersByRequestAsync(System.String)">
+            <summary>
+            Return all users that match the request.
+            </summary>
+            <param name="request">nickname or email or phone number</param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.GetAllUsersByTypeAsync(System.String)">
+            <summary>
+            Return all users of concrete type.
+            </summary>
+            <param name="userType">user type</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

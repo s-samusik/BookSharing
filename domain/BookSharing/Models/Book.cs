@@ -7,19 +7,19 @@ namespace BookSharing.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Title is required")]
-        [StringLength(50, ErrorMessage = "Title can't be longer than 50 characters")]
+        [Required]
+        [StringLength(50, MinimumLength =3)]
         public string Title { get; set; }
 
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Author is required")]
+        [Required]
         public virtual Author Author { get; set; }
 
-        [Required(ErrorMessage = "Genre is required")]
+        [Required]
         public virtual Genre Genre { get; set; }
 
-        [Required(ErrorMessage = "Publisher is required")]
+        [Required]
         public virtual Publisher Publisher { get; set; }
     }
 }
