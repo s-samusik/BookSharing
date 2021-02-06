@@ -29,8 +29,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // POST: api/users/
         [HttpPost("")]
-        [Authorize]
-        public async Task<ActionResult<UserCreateDto>> CreateUserAsync(UserCreateDto userDto)
+        public async Task<ActionResult<UserReadDto>> CreateUserAsync(UserCreateDto userDto)
         {
             if (userDto == null || !ModelState.IsValid)
             {
@@ -39,11 +38,11 @@ namespace BookSharing.API.Controllers
 
             var user = mapper.Map<User>(userDto);
 
-            await userRepository.AddAsync(user);
-            
-            var userReadDto = mapper.Map<UserReadDto>(user);
+            var resultUser = await userRepository.AddAsync(user);
 
-            return CreatedAtAction("GetUserByIdAsync", new { id = userReadDto.Id }, userReadDto);
+            var userReadDto = mapper.Map<UserReadDto>(resultUser);
+
+            return CreatedAtAction(nameof(GetUserByIdAsync), new { id = userReadDto.Id }, userReadDto);
         }
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // PUT: api/users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserAsync(int id, [FromBody]UserReadDto userDto)
+        public async Task<IActionResult> PutUserAsync(int id, [FromBody] UserReadDto userDto)
         {
             if (id != userDto.Id)
             {
@@ -89,21 +88,20 @@ namespace BookSharing.API.Controllers
         /// <summary>
         /// Return user from database with the specified id.
         /// </summary>
-        /// <param name="id">existing user</param>
+        /// <param name="id"></param>
         /// <returns></returns>
         // GET: api/users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserCreateDto>> GetUserByIdAsync(int id)
+        public async Task<IActionResult> GetUserByIdAsync(int id)
         {
             var user = await userRepository.GetByIdAsync(id);
-            
+
             if (user == null)
             {
                 return NotFound();
             }
 
             var userReadDto = mapper.Map<UserReadDto>(user);
-
             return Ok(userReadDto);
         }
 

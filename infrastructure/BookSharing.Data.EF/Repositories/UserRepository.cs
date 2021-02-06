@@ -16,25 +16,27 @@ namespace BookSharing.Data.EF.Repositories
             this.dbContextFactory = dbContextFactory;
         }
 
-        public async Task AddAsync(User user)
+        public async Task<User> AddAsync(User user)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
 
-            //var userTypeId = await context.UserTypes
-            //                            .AsNoTracking()
-            //                            .Where(x => x.Name == user.UserType.Name)
-            //                            .Select(x => x.Id)
-            //                            .FirstOrDefaultAsync();
+            var userTypeId = await context.UserTypes
+                                        .AsNoTracking()
+                                        .Where(x => x.Name == "Client")
+                                        .Select(x => x.Id)
+                                        .FirstOrDefaultAsync();
+            if (userTypeId == 0)
+            {
+                UserType userType = new UserType
+                {
+                    Name = "Client"
+                };
+                
+                context.UserTypes.Add(userType);
+                context.SaveChanges();
 
-            //if (userTypeId == 0)
-            //{
-            //    UserType userType = new UserType
-            //    {
-            //        Name = user.UserType.Name
-            //    };
-
-            //    userTypeId = userType.Id;
-            //}
+                userTypeId = userType.Id;
+            }
 
             User newUser = new User
             {
@@ -42,10 +44,13 @@ namespace BookSharing.Data.EF.Repositories
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Password = user.Password,
+                UserTypeId = userTypeId
             };
 
             await context.Users.AddAsync(newUser);
             await context.SaveChangesAsync();
+
+            return newUser;
         }
 
         public async Task UpdateAsync(User user)
@@ -65,7 +70,6 @@ namespace BookSharing.Data.EF.Repositories
             context.Users.Remove(user);
             await context.SaveChangesAsync();
         }
-
         public async Task<List<User>> GetAllByTypeAsync(UserType type)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));

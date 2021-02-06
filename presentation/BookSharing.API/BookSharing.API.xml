@@ -121,7 +121,7 @@
             <summary>
             Return user from database with the specified id.
             </summary>
-            <param name="id">existing user</param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.UsersController.GetAllUsersByRequestAsync(System.String)">
