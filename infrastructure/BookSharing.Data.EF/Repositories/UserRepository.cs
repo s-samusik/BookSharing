@@ -19,12 +19,22 @@ namespace BookSharing.Data.EF.Repositories
         public async Task AddAsync(User user)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
-            var userType = await context.UserTypes
-                                        .AsNoTracking()
-                                        .Where(x => x.Id == user.UserType.Id)
-                                        .FirstOrDefaultAsync();
 
-            if (userType == null) userType = user.UserType;
+            //var userTypeId = await context.UserTypes
+            //                            .AsNoTracking()
+            //                            .Where(x => x.Name == user.UserType.Name)
+            //                            .Select(x => x.Id)
+            //                            .FirstOrDefaultAsync();
+
+            //if (userTypeId == 0)
+            //{
+            //    UserType userType = new UserType
+            //    {
+            //        Name = user.UserType.Name
+            //    };
+
+            //    userTypeId = userType.Id;
+            //}
 
             User newUser = new User
             {
@@ -32,7 +42,6 @@ namespace BookSharing.Data.EF.Repositories
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Password = user.Password,
-                UserType = userType
             };
 
             await context.Users.AddAsync(newUser);

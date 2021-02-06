@@ -25,39 +25,45 @@ namespace BookSharing.API.Controllers
         /// <summary>
         /// Add new user to database.
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="userDto"></param>
         /// <returns></returns>
         // POST: api/users/
         [HttpPost("")]
         [Authorize]
-        public async Task<ActionResult<UserDto>> CreateUserAsync(UserDto user)
+        public async Task<ActionResult<UserCreateDto>> CreateUserAsync(UserCreateDto userDto)
         {
-            if (user == null) return BadRequest();
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (userDto == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            var userResult = mapper.Map<User>(user);
+            var user = mapper.Map<User>(userDto);
 
-            await userRepository.AddAsync(userResult);
+            await userRepository.AddAsync(user);
+            
+            var userReadDto = mapper.Map<UserReadDto>(user);
 
-            return CreatedAtAction("GetUserByIdAsync", new { id = user.Id }, user);
+            return CreatedAtAction("GetUserByIdAsync", new { id = userReadDto.Id }, userReadDto);
         }
 
         /// <summary>
         /// Change existing user from database.
         /// </summary>
         /// <param name="id">existing user</param>
-        /// <param name="user"></param>
+        /// <param name="userDto"></param>
         /// <returns></returns>
         // PUT: api/users/5
         [HttpPut("{id}")]
-        [Authorize]
-        public async Task<IActionResult> PutUserAsync(int id, UserDto user)
+        public async Task<IActionResult> PutUserAsync(int id, [FromBody]UserReadDto userDto)
         {
-            if (id != user.Id) return BadRequest();
+            if (id != userDto.Id)
+            {
+                return BadRequest();
+            }
 
-            var userResult = mapper.Map<User>(user);
+            var user = mapper.Map<User>(userDto);
 
-            await userRepository.UpdateAsync(userResult);
+            await userRepository.UpdateAsync(user);
 
             return Ok();
         }
@@ -69,8 +75,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // DELETE: api/users/5
         [HttpDelete("{id}")]
-        [Authorize]
-        public async Task<ActionResult<UserDto>> DeleteUserAsync(int id)
+        public async Task<ActionResult<UserCreateDto>> DeleteUserAsync(int id)
         {
             var user = await userRepository.GetByIdAsync(id);
 
@@ -88,15 +93,18 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // GET: api/users/5
         [HttpGet("{id}")]
-        [Authorize]
-        public async Task<ActionResult<UserDto>> GetUserByIdAsync(int id)
+        public async Task<ActionResult<UserCreateDto>> GetUserByIdAsync(int id)
         {
             var user = await userRepository.GetByIdAsync(id);
-            if (user == null) return NotFound();
+            
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-            var userResult = mapper.Map<UserDto>(user);
+            var userReadDto = mapper.Map<UserReadDto>(user);
 
-            return Ok(userResult);
+            return Ok(userReadDto);
         }
 
         /// <summary>
@@ -106,10 +114,10 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         //GET: api/users/search/"nickname or email or phone number"
         [HttpGet("search/{request}")]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersByRequestAsync(string request)
+        public async Task<ActionResult<IEnumerable<UserCreateDto>>> GetAllUsersByRequestAsync(string request)
         {
             var users = await userRepository.GetAllByRequestAsync(request);
-            var usersResult = mapper.Map<IEnumerable<UserDto>>(users);
+            var usersResult = mapper.Map<IEnumerable<UserCreateDto>>(users);
 
             return Ok(usersResult);
         }
@@ -121,14 +129,14 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         //GET: api/users/by_type/"user type"
         [HttpGet("by_type/{userType}")]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsersByTypeAsync(string userType)
+        public async Task<ActionResult<IEnumerable<UserCreateDto>>> GetAllUsersByTypeAsync(string userType)
         {
             var type = await userRepository.GetUserTypeByRequestAsync(userType);
 
             if (type == null) return NotFound(type);
 
             var users = await userRepository.GetAllByTypeAsync(type);
-            var usersResult = mapper.Map<IEnumerable<UserDto>>(users);
+            var usersResult = mapper.Map<IEnumerable<UserCreateDto>>(users);
 
             return Ok(usersResult);
         }

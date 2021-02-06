@@ -95,19 +95,19 @@
             <param name="id">existing location.</param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.UsersController.CreateUserAsync(BookSharing.Data.UserDto)">
+        <member name="M:BookSharing.API.Controllers.UsersController.CreateUserAsync(BookSharing.Data.UserCreateDto)">
             <summary>
             Add new user to database.
             </summary>
-            <param name="user"></param>
+            <param name="userDto"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.UsersController.PutUserAsync(System.Int32,BookSharing.Data.UserDto)">
+        <member name="M:BookSharing.API.Controllers.UsersController.PutUserAsync(System.Int32,BookSharing.Data.UserReadDto)">
             <summary>
             Change existing user from database.
             </summary>
             <param name="id">existing user</param>
-            <param name="user"></param>
+            <param name="userDto"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.UsersController.DeleteUserAsync(System.Int32)">
