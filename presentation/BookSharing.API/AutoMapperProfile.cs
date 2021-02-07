@@ -9,7 +9,7 @@ namespace BookSharing.API
         public AutoMapperProfile()
         {
             CreateMap<UserCreateDto, User>();
-            CreateMap<User, UserReadDto>()
+            CreateMap<User, UserReadDto>();
 
             CreateMap<UserTypeCreateDto, UserType>();
             CreateMap<UserType, UserTypeReadDto>();

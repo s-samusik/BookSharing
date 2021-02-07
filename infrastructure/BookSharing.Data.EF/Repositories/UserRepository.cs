@@ -21,10 +21,9 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var userTypeId = await context.UserTypes
-                                        .AsNoTracking()
-                                        .Where(x => x.Name == "Client")
-                                        .Select(x => x.Id)
-                                        .FirstOrDefaultAsync();
+                                          .Where(x => x.Name == "Client")
+                                          .Select(x => x.Id)
+                                          .FirstOrDefaultAsync();
             if (userTypeId == 0)
             {
                 UserType userType = new UserType
@@ -32,8 +31,8 @@ namespace BookSharing.Data.EF.Repositories
                     Name = "Client"
                 };
                 
-                context.UserTypes.Add(userType);
-                context.SaveChanges();
+                await context.UserTypes.AddAsync(userType);
+                await context.SaveChangesAsync();
 
                 userTypeId = userType.Id;
             }
@@ -75,7 +74,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var users = await context.Users
-                                     .AsNoTracking()
                                      .Include(x => x.UserType)
                                      .Where(x => x.UserType.Id == type.Id)
                                      .ToListAsync();
@@ -87,7 +85,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var user = await context.Users
-                                    .AsNoTracking()
                                     .Include(x => x.UserType)
                                     .Where(x => x.Id == id)
                                     .FirstOrDefaultAsync();
@@ -99,7 +96,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var users = await context.Users
-                                     .AsNoTracking()
                                      .Include(x => x.UserType)
                                      .Where(x => x.Nickname.Contains(query)
                                               || x.PhoneNumber.Contains(query)
@@ -113,7 +109,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var user = await context.Users
-                                    .AsNoTracking()
                                     .Include(x => x.UserType)
                                     .Where(x => x.Nickname == login
                                              || x.PhoneNumber == login
@@ -128,7 +123,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var userType = await context.UserTypes
-                                        .AsNoTracking()
                                         .Where(x => x.Name.Contains(query))
                                         .FirstOrDefaultAsync();
             return userType;

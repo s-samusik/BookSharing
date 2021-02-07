@@ -29,7 +29,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // POST: api/users/
         [HttpPost("")]
-        public async Task<ActionResult<UserReadDto>> CreateUserAsync(UserCreateDto userDto)
+        public async Task<IActionResult> CreateUserAsync(UserCreateDto userDto)
         {
             if (userDto == null || !ModelState.IsValid)
             {
@@ -38,9 +38,13 @@ namespace BookSharing.API.Controllers
 
             var user = mapper.Map<User>(userDto);
 
-            var resultUser = await userRepository.AddAsync(user);
+            //after saving to the database(context.SaveChangesAsync()), the user model is not updated.
+            //I was unable to fix this.So I do the following:
+            var userResult = await userRepository.AddAsync(user); // get user with Id from database.
 
-            var userReadDto = mapper.Map<UserReadDto>(resultUser);
+            userResult = await userRepository.GetByIdAsync(userResult.Id); // get user with userType from database.
+
+            var userReadDto = mapper.Map<UserReadDto>(userResult);
 
             return CreatedAtAction(nameof(GetUserByIdAsync), new { id = userReadDto.Id }, userReadDto);
         }
