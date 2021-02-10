@@ -16,7 +16,7 @@ namespace BookSharing.Data.EF.Repositories
             this.dbContextFactory = dbContextFactory;
         }
 
-        public async Task<User> AddAsync(User user)
+        public async Task AddAsync(User user)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
 
@@ -30,26 +30,18 @@ namespace BookSharing.Data.EF.Repositories
                 {
                     Name = "Client"
                 };
-                
+
                 await context.UserTypes.AddAsync(userType);
                 await context.SaveChangesAsync();
 
                 userTypeId = userType.Id;
             }
 
-            User newUser = new User
-            {
-                Nickname = user.Nickname,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                Password = user.Password,
-                UserTypeId = userTypeId
-            };
+            user.UserTypeId = userTypeId;
 
-            await context.Users.AddAsync(newUser);
+            await context.UserTypes.Where(x => x.Id == userTypeId).LoadAsync();
+            await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
-
-            return newUser;
         }
 
         public async Task UpdateAsync(User user)
@@ -57,8 +49,7 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             context.Entry(user).State = EntityState.Modified;
-            context.Entry(user.UserType).State = EntityState.Modified;
-
+            
             await context.SaveChangesAsync();
         }
 
@@ -69,6 +60,7 @@ namespace BookSharing.Data.EF.Repositories
             context.Users.Remove(user);
             await context.SaveChangesAsync();
         }
+        
         public async Task<List<User>> GetAllByTypeAsync(UserType type)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));

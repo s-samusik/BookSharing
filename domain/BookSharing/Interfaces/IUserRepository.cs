@@ -6,7 +6,7 @@ namespace BookSharing.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User> AddAsync(User user);
+        Task AddAsync(User user);
         Task UpdateAsync(User user);
         Task DeleteAsync(User user);
 

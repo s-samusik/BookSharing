@@ -2,7 +2,6 @@
 using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,14 +36,8 @@ namespace BookSharing.API.Controllers
             }
 
             var user = mapper.Map<User>(userDto);
-
-            //after saving to the database(context.SaveChangesAsync()), the user model is not updated.
-            //I was unable to fix this.So I do the following:
-            var userResult = await userRepository.AddAsync(user); // get user with Id from database.
-
-            userResult = await userRepository.GetByIdAsync(userResult.Id); // get user with userType from database.
-
-            var userReadDto = mapper.Map<UserReadDto>(userResult);
+            await userRepository.AddAsync(user); 
+            var userReadDto = mapper.Map<UserReadDto>(user);
 
             return CreatedAtAction(nameof(GetUserByIdAsync), new { id = userReadDto.Id }, userReadDto);
         }
@@ -52,23 +45,25 @@ namespace BookSharing.API.Controllers
         /// <summary>
         /// Change existing user from database.
         /// </summary>
-        /// <param name="id">existing user</param>
+        /// <param name="id"></param>
         /// <param name="userDto"></param>
         /// <returns></returns>
         // PUT: api/users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserAsync(int id, [FromBody] UserReadDto userDto)
+        public async Task<IActionResult> PutUserAsync(int id, [FromBody] UserUpdateDto userDto)
         {
-            if (id != userDto.Id)
-            {
-                return BadRequest();
-            }
+            var user = await userRepository.GetByIdAsync(id);
 
-            var user = mapper.Map<User>(userDto);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            
+            mapper.Map(userDto, user);
 
             await userRepository.UpdateAsync(user);
 
-            return Ok();
+            return NoContent();
         }
 
         /// <summary>
@@ -116,10 +111,10 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         //GET: api/users/search/"nickname or email or phone number"
         [HttpGet("search/{request}")]
-        public async Task<ActionResult<IEnumerable<UserCreateDto>>> GetAllUsersByRequestAsync(string request)
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersByRequestAsync(string request)
         {
             var users = await userRepository.GetAllByRequestAsync(request);
-            var usersResult = mapper.Map<IEnumerable<UserCreateDto>>(users);
+            var usersResult = mapper.Map<IEnumerable<UserReadDto>>(users);
 
             return Ok(usersResult);
         }
@@ -127,18 +122,21 @@ namespace BookSharing.API.Controllers
         /// <summary>
         /// Return all users of concrete type.
         /// </summary>
-        /// <param name="userType">user type</param>
+        /// <param name="userType"></param>
         /// <returns></returns>
         //GET: api/users/by_type/"user type"
         [HttpGet("by_type/{userType}")]
-        public async Task<ActionResult<IEnumerable<UserCreateDto>>> GetAllUsersByTypeAsync(string userType)
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersByTypeAsync(string userType)
         {
             var type = await userRepository.GetUserTypeByRequestAsync(userType);
 
-            if (type == null) return NotFound(type);
+            if (type == null)
+            {
+                return NotFound(type);
+            }
 
             var users = await userRepository.GetAllByTypeAsync(type);
-            var usersResult = mapper.Map<IEnumerable<UserCreateDto>>(users);
+            var usersResult = mapper.Map<IEnumerable<UserReadDto>>(users);
 
             return Ok(usersResult);
         }
