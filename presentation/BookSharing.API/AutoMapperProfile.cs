@@ -13,7 +13,6 @@ namespace BookSharing.API
             CreateMap<User, UserReadDto>();
 
             CreateMap<UserTypeCreateDto, UserType>();
-            CreateMap<UserTypeUpdateDto, UserType>();
             CreateMap<UserType, UserTypeReadDto>();
 
             CreateMap<RentLocationDto, RentLocation>();

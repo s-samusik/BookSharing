@@ -73,11 +73,14 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // DELETE: api/users/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserCreateDto>> DeleteUserAsync(int id)
+        public async Task<IActionResult> DeleteUserAsync(int id)
         {
             var user = await userRepository.GetByIdAsync(id);
 
-            if (user == null || user.Id != id) return NotFound();
+            if (user == null)
+            {
+                return NotFound(id);
+            }
 
             await userRepository.DeleteAsync(user);
 
@@ -139,6 +142,20 @@ namespace BookSharing.API.Controllers
             var usersResult = mapper.Map<IEnumerable<UserReadDto>>(users);
 
             return Ok(usersResult);
+        }
+
+        /// <summary>
+        /// Return all user tytpes from database.
+        /// </summary>
+        /// <returns></returns>
+        //GET: api/users/types/
+        [HttpGet("types")]
+        public async Task <ActionResult<IEnumerable<UserTypeReadDto>>> GetAllUserTypesAsync()
+        {
+            var types = await userRepository.GetAllUserTypesAsync();
+            var typesResult = mapper.Map<IEnumerable<UserTypeReadDto>>(types);
+
+            return Ok(typesResult);
         }
     }
 }

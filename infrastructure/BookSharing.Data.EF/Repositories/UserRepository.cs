@@ -119,5 +119,14 @@ namespace BookSharing.Data.EF.Repositories
                                         .FirstOrDefaultAsync();
             return userType;
         }
+
+        public async Task<List<UserType>> GetAllUserTypesAsync()
+        {
+            var context = dbContextFactory.Create(typeof(UserRepository));
+
+            var userTypes = await context.UserTypes.ToListAsync();
+            
+            return userTypes;
+        }
     }
 }
