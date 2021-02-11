@@ -60,26 +60,26 @@
             <param name="bookGenre">genre of book</param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.RentLocationsController.CreateRentLocationAsync(BookSharing.Data.RentLocationDto)">
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.CreateRentLocationAsync(BookSharing.Data.RentLocationCreateDto)">
             <summary>
             Add new location to database.
             </summary>
-            <param name="location"></param>
+            <param name="locationDto"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.RentLocationsController.PutRentLocationAsync(System.Int32,BookSharing.Data.RentLocationDto)">
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.PutRentLocationAsync(System.Int32,BookSharing.Data.RentLocationUpdateDto)">
             <summary>
             Change existing location from database.
             </summary>
-            <param name="id">existing location.</param>
-            <param name="location"></param>
+            <param name="id"></param>
+            <param name="locationDto"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.RentLocationsController.DeleteRentLocationAsync(System.Int32)">
             <summary>
             Removes existing location from database.
             </summary>
-            <param name="id">existing location.</param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.RentLocationsController.GetAllRentLocationsAsync">
@@ -92,7 +92,7 @@
             <summary>
             Return rent location from database with the specified id.
             </summary>
-            <param name="id">existing location.</param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.UsersController.CreateUserAsync(BookSharing.Data.UserCreateDto)">
@@ -136,6 +136,12 @@
             Return all users of concrete type.
             </summary>
             <param name="userType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.GetAllUserTypesAsync">
+            <summary>
+            Return all user tytpes from database.
+            </summary>
             <returns></returns>
         </member>
     </members>
