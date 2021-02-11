@@ -22,7 +22,7 @@ namespace BookSharing.Data
         [Compare("Password", ErrorMessage = "Passwords don't match")]
         public string PasswordConfirm { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "User type not specified")]
-        public UserTypeUpdateDto UserType { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "User type Id not specified")]
+        public int UserTypeId { get; set; }
     }
 }
