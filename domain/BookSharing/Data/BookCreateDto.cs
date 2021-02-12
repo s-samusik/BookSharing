@@ -2,22 +2,21 @@
 
 namespace BookSharing.Data
 {
-    public class BookDto
+    public class BookCreateDto
     {
-        public int Id { get; set; }
-
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Title not specified")]
         [StringLength(50, MinimumLength = 3)]
         public string Title { get; set; }
+
         public string Description { get; set; }
 
         [Required]
-        public AuthorDto Author { get; set; }
-       
-        [Required]
-        public GenreDto Genre { get; set; }
+        public GenreCreateDto Genre { get; set; }
         
         [Required]
-        public PublisherDto Publisher { get; set; }
+        public AuthorCreateDto Author { get; set; }
+        
+        [Required]
+        public PublisherCreateDto Publisher { get; set; }
     }
 }
