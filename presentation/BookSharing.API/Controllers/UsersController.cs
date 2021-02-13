@@ -2,6 +2,7 @@
 using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace BookSharing.API.Controllers
             }
 
             var user = mapper.Map<User>(userDto);
-            await userRepository.AddAsync(user); 
+            await userRepository.AddAsync(user);
             var userReadDto = mapper.Map<UserReadDto>(user);
 
             return CreatedAtAction(nameof(GetUserByIdAsync), new { id = userReadDto.Id }, userReadDto);
@@ -50,6 +51,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // PUT: api/users/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutUserAsync(int id, [FromBody] UserUpdateDto userDto)
         {
             var user = await userRepository.GetByIdAsync(id);
@@ -58,7 +60,7 @@ namespace BookSharing.API.Controllers
             {
                 return NotFound(id);
             }
-            
+
             mapper.Map(userDto, user);
 
             await userRepository.UpdateAsync(user);
@@ -73,6 +75,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // DELETE: api/users/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator, Librarian")]
         public async Task<IActionResult> DeleteUserAsync(int id)
         {
             var user = await userRepository.GetByIdAsync(id);
@@ -94,6 +97,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // GET: api/users/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Administrator, Librarian")]
         public async Task<IActionResult> GetUserByIdAsync(int id)
         {
             var user = await userRepository.GetByIdAsync(id);
@@ -114,6 +118,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         //GET: api/users/search/"nickname or email or phone number"
         [HttpGet("search/{request}")]
+        [Authorize(Roles = "Administrator, Librarian")]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersByRequestAsync(string request)
         {
             var users = await userRepository.GetAllByRequestAsync(request);
@@ -150,6 +155,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         //GET: api/users/types/
         [HttpGet("types")]
+        [Authorize(Roles = "Administrator")]
         public async Task <ActionResult<IEnumerable<UserTypeReadDto>>> GetAllUserTypesAsync()
         {
             var types = await userRepository.GetAllUserTypesAsync();

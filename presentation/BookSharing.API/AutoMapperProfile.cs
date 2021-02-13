@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookSharing.Auth.Data;
 using BookSharing.Data;
 using BookSharing.Models;
 
@@ -31,6 +32,8 @@ namespace BookSharing.API
             
             CreateMap<PublisherCreateDto, Publisher>();
             CreateMap<Publisher, PublisherReadDto>();
+
+            CreateMap<SignUpDto, User>();
         }
     }
 }

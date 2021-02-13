@@ -2,6 +2,7 @@
 using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace BookSharing.API.Controllers
 {
     [Route("api/locations")]
     [ApiController]
+    [Authorize(Roles = "Administrator")]
+
     public class RentLocationsController : ControllerBase
     {
         private readonly IRentLocationRepository rentLocationRepository;
@@ -93,6 +96,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // GET: api/locations/
         [HttpGet()]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<RentLocationReadDto>>> GetAllRentLocationsAsync()
         {
             var locations = await rentLocationRepository.GetAllAsync();
