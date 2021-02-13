@@ -11,33 +11,33 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.BooksController.CreateBookAsync(BookSharing.Data.BookDto)">
+        <member name="M:BookSharing.API.Controllers.BooksController.CreateBookAsync(BookSharing.Data.BookCreateDto)">
             <summary>
             Add new book to database.
             </summary>
-            <param name="book"></param>
+            <param name="bookDto"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.BooksController.PutBookAsync(System.Int32,BookSharing.Data.BookDto)">
+        <member name="M:BookSharing.API.Controllers.BooksController.PutBookAsync(System.Int32,BookSharing.Data.BookUpdateDto)">
             <summary>
             Change existing book from database.
             </summary>
-            <param name="id">existing book</param>
-            <param name="book"></param>
+            <param name="id"></param>
+            <param name="bookDto"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.BooksController.DeleteBookAsync(System.Int32)">
             <summary>
             Remove existing book from database.
             </summary>
-            <param name="id">existing book.</param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.BooksController.GetBookByIdAsync(System.Int32)">
             <summary>
             Return book from database with the specified id.
             </summary>
-            <param name="id">existing book.</param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.BooksController.GetAllBooksByRequestAsync(System.String)">
@@ -57,7 +57,7 @@
             <summary>
             Return all books of concrete book genre.
             </summary>
-            <param name="bookGenre">genre of book</param>
+            <param name="bookGenre"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.RentLocationsController.CreateRentLocationAsync(BookSharing.Data.RentLocationCreateDto)">

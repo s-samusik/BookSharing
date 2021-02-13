@@ -13,19 +13,12 @@ namespace BookSharing.Models
 
         public string Description { get; set; }
         
-        public int AuthorId { get; set; }
-
-        [Required]
-        public virtual Author Author { get; set; }
-
         public int GenreId { get; set; }
-
-        [Required]
-        public virtual Genre Genre { get; set; }
-
+        public int AuthorId { get; set; }
         public int PublisherId { get; set; }
-
-        [Required]
+        
+        public virtual Genre Genre { get; set; }
+        public virtual Author Author { get; set; }
         public virtual Publisher Publisher { get; set; }
     }
 }

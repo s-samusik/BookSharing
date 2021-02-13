@@ -10,13 +10,13 @@ namespace BookSharing.Data
 
         public string Description { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Genre not specified")]
         public GenreCreateDto Genre { get; set; }
-        
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Author not specified")]
         public AuthorCreateDto Author { get; set; }
-        
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Publisher not specified")]
         public PublisherCreateDto Publisher { get; set; }
     }
 }

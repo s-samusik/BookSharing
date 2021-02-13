@@ -18,34 +18,61 @@ namespace BookSharing.Data.EF.Repositories
         public async Task AddAsync(Book book)
         {
             var context = dbContextFactory.Create(typeof(BookRepository));
-            var genre = await context.Genres
-                                     .AsNoTracking()
-                                     .Where(x => x.Id == book.Genre.Id)
-                                     .FirstOrDefaultAsync();
-            if (genre == null) genre = book.Genre;
 
-            var author = await context.Authors
-                                      .AsNoTracking()
-                                      .Where(x => x.Id == book.Author.Id)
+            var bookGenre = await context.Genres
+                                      .Where(x => x.Name == book.Genre.Name)
                                       .FirstOrDefaultAsync();
-            if (author == null) author = book.Author;
-
-            var publisher = await context.Publishers
-                                         .AsNoTracking()
-                                         .Where(x => x.Id == book.Publisher.Id)
-                                         .FirstOrDefaultAsync();
-            if (publisher == null) publisher = book.Publisher;
-
-            Book newBook = new Book
+            if (bookGenre == null)
             {
-                Title = book.Title,
-                Description = book.Description,
-                Genre = genre,
-                Author = author,
-                Publisher = publisher
-            };
+                Genre genre = new Genre
+                {
+                    Name = book.Genre.Name
+                };
 
-            await context.Books.AddAsync(newBook);
+                await context.Genres.AddAsync(genre);
+                await context.SaveChangesAsync();
+
+                bookGenre = genre;
+            }
+            book.Genre = bookGenre;
+
+            
+            var bookAuthor = await context.Authors
+                                      .Where(x => x.Name == book.Author.Name)
+                                      .FirstOrDefaultAsync();
+            if (bookAuthor == null)
+            {
+                Author author = new Author
+                {
+                    Name = book.Author.Name
+                };
+
+                await context.Authors.AddAsync(author);
+                await context.SaveChangesAsync();
+
+                bookAuthor = author;
+            }
+            book.Author = bookAuthor;
+            
+            
+            var bookPublisher = await context.Publishers
+                                             .Where(x => x.Name == book.Publisher.Name)
+                                             .FirstOrDefaultAsync();
+            if (bookPublisher == null)
+            {
+                Publisher publisher = new Publisher
+                {
+                    Name = book.Publisher.Name
+                };
+
+                await context.Publishers.AddAsync(publisher);
+                await context.SaveChangesAsync();
+
+                bookPublisher = publisher;
+            }
+            book.Publisher = bookPublisher;
+
+            await context.Books.AddAsync(book);
             await context.SaveChangesAsync();
         }
 
@@ -54,9 +81,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(BookRepository));
 
             context.Entry(book).State = EntityState.Modified;
-            context.Entry(book.Genre).State = EntityState.Modified;
-            context.Entry(book.Author).State = EntityState.Modified;
-            context.Entry(book.Publisher).State = EntityState.Modified;
 
             await context.SaveChangesAsync();
         }
@@ -74,7 +98,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(BookRepository));
 
             var book = await context.Books
-                                    .AsNoTracking()
                                     .Include(x => x.Genre)
                                     .Include(x => x.Author)
                                     .Include(x => x.Publisher)
@@ -88,12 +111,11 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(BookRepository));
 
             var books = await context.Books
-                                     .AsNoTracking()
                                      .Include(x => x.Genre)
                                      .Include(x => x.Author)
                                      .Include(x => x.Publisher)
-                                     .Where(x => x.Title.Contains(query) 
-                                              || x.Author.Name.Contains(query) 
+                                     .Where(x => x.Title.Contains(query)
+                                              || x.Author.Name.Contains(query)
                                               || x.Publisher.Name.Contains(query))
                                      .ToListAsync();
             return books;
@@ -111,7 +133,6 @@ namespace BookSharing.Data.EF.Repositories
         {
             var context = dbContextFactory.Create(typeof(BookRepository));
             var genre = await context.Genres
-                                     .AsNoTracking()
                                      .Where(x => x.Name.Contains(query))
                                      .FirstOrDefaultAsync();
             return genre;
@@ -122,7 +143,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(BookRepository));
 
             var books = await context.Books
-                                     .AsNoTracking()
                                      .Include(x => x.Genre)
                                      .Include(x => x.Author)
                                      .Include(x => x.Publisher)
