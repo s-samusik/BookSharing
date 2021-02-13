@@ -2,11 +2,9 @@
 
 namespace BookSharing.Data
 {
-    public class UserTypeDto
+    public class AuthorCreateDto
     {
-        public int Id { get; set; }
-
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Name not specified")]
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
     }

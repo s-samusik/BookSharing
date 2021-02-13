@@ -15,5 +15,6 @@ namespace BookSharing.Interfaces
         Task<User> GetByRequestAsync(string login, string password);
         Task<UserType> GetUserTypeByRequestAsync(string request);
         Task<List<User>> GetAllByTypeAsync(UserType type);
+        Task<List<UserType>> GetAllUserTypesAsync();
     }
 }

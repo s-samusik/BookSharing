@@ -19,23 +19,28 @@ namespace BookSharing.Data.EF.Repositories
         public async Task AddAsync(User user)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
-            var userType = await context.UserTypes
-                                        .AsNoTracking()
-                                        .Where(x => x.Id == user.UserType.Id)
-                                        .FirstOrDefaultAsync();
 
-            if (userType == null) userType = user.UserType;
-
-            User newUser = new User
+            var userTypeId = await context.UserTypes
+                                          .Where(x => x.Name == "Client")
+                                          .Select(x => x.Id)
+                                          .FirstOrDefaultAsync();
+            if (userTypeId == 0)
             {
-                Nickname = user.Nickname,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                Password = user.Password,
-                UserType = userType
-            };
+                UserType userType = new UserType
+                {
+                    Name = "Client"
+                };
 
-            await context.Users.AddAsync(newUser);
+                await context.UserTypes.AddAsync(userType);
+                await context.SaveChangesAsync();
+
+                userTypeId = userType.Id;
+            }
+
+            user.UserTypeId = userTypeId;
+
+            await context.UserTypes.Where(x => x.Id == userTypeId).LoadAsync();
+            await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
         }
 
@@ -44,8 +49,7 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             context.Entry(user).State = EntityState.Modified;
-            context.Entry(user.UserType).State = EntityState.Modified;
-
+            
             await context.SaveChangesAsync();
         }
 
@@ -56,13 +60,12 @@ namespace BookSharing.Data.EF.Repositories
             context.Users.Remove(user);
             await context.SaveChangesAsync();
         }
-
+        
         public async Task<List<User>> GetAllByTypeAsync(UserType type)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var users = await context.Users
-                                     .AsNoTracking()
                                      .Include(x => x.UserType)
                                      .Where(x => x.UserType.Id == type.Id)
                                      .ToListAsync();
@@ -74,7 +77,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var user = await context.Users
-                                    .AsNoTracking()
                                     .Include(x => x.UserType)
                                     .Where(x => x.Id == id)
                                     .FirstOrDefaultAsync();
@@ -86,7 +88,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var users = await context.Users
-                                     .AsNoTracking()
                                      .Include(x => x.UserType)
                                      .Where(x => x.Nickname.Contains(query)
                                               || x.PhoneNumber.Contains(query)
@@ -100,7 +101,6 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var user = await context.Users
-                                    .AsNoTracking()
                                     .Include(x => x.UserType)
                                     .Where(x => x.Nickname == login
                                              || x.PhoneNumber == login
@@ -115,10 +115,18 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var userType = await context.UserTypes
-                                        .AsNoTracking()
                                         .Where(x => x.Name.Contains(query))
                                         .FirstOrDefaultAsync();
             return userType;
+        }
+
+        public async Task<List<UserType>> GetAllUserTypesAsync()
+        {
+            var context = dbContextFactory.Create(typeof(UserRepository));
+
+            var userTypes = await context.UserTypes.ToListAsync();
+            
+            return userTypes;
         }
     }
 }
