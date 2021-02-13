@@ -31,8 +31,7 @@ namespace BookSharing.Auth
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Nickname),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Nbf, user.PhoneNumber),
-                new Claim(JwtRegisteredClaimNames.Typ, user.UserType.Name)
+                new Claim ("role", user.UserType.Name)
             };
 
             var token = new JwtSecurityToken(Issuer,

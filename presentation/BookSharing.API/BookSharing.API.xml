@@ -11,6 +11,13 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:BookSharing.API.Controllers.AuthController.RegisterAsync(BookSharing.Auth.Data.SignUpDto)">
+            <summary>
+            Create a new client and return a token for this user.
+            </summary>
+            <param name="signUpDto"></param>
+            <returns></returns>
+        </member>
         <member name="M:BookSharing.API.Controllers.BooksController.CreateBookAsync(BookSharing.Data.BookCreateDto)">
             <summary>
             Add new book to database.

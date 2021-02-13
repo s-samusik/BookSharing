@@ -27,6 +27,7 @@ namespace BookSharing.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
             services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false);
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore

@@ -2,6 +2,7 @@
 using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace BookSharing.API.Controllers
 {
     [Route("api/books")]
     [ApiController]
+    [Authorize(Roles = "Administrator, Librarian")]
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository bookRepository;
@@ -115,6 +117,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         //GET: api/books/search/"title or author or publisher"
         [HttpGet("search/{request}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<BookReadDto>>> GetAllBooksByRequestAsync(string request)
         {
             var books = await bookRepository.GetAllByRequestAsync(request);
@@ -129,6 +132,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         //GET: api/books/genres/
         [HttpGet("genres")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<GenreReadDto>>> GetAllBookGenresAsync()
         {
             var genres = await bookRepository.GetAllBookGenresAsync();
@@ -144,6 +148,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         //GET: api/books/by_genre/"book genre"
         [HttpGet("by_genre/{bookGenre}")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<BookReadDto>>> GetAllBooksByGenreAsync(string bookGenre)
         {
             var genre = await bookRepository.GetBookGenreByRequestAsync(bookGenre);
