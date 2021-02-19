@@ -11,8 +11,10 @@ namespace BookSharing.Interfaces
         Task DeleteAsync(User user);
 
         Task<User> GetByIdAsync(int id);
-        Task<List<User>> GetAllByQueryAsync(string query);
-        Task<UserType> GetUserTypeByQueryAsync(string query);
+        Task<List<User>> GetAllByRequestAsync(string request);
+        Task<User> GetByRequestAsync(string login, string password);
+        Task<UserType> GetUserTypeByRequestAsync(string request);
         Task<List<User>> GetAllByTypeAsync(UserType type);
+        Task<List<UserType>> GetAllUserTypesAsync();
     }
 }

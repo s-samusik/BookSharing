@@ -43,9 +43,8 @@ namespace BookSharing.Data.EF.Repositories
         {
             var context = dbContextFactory.Create(typeof(RentLocationRepository));
 
-            var locations = await context.RentLocations
-                                      .AsNoTracking()
-                                      .ToListAsync();
+            var locations = await context.RentLocations.ToListAsync();
+
             return locations;
         }
 
@@ -54,6 +53,7 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(RentLocationRepository));
 
             var location = await context.RentLocations.FindAsync(id);
+            
             return location;
         }
     }

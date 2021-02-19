@@ -2,6 +2,7 @@
 using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace BookSharing.API.Controllers
 {
     [Route("api/books")]
     [ApiController]
+    [Authorize(Roles = "Administrator, Librarian")]
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository bookRepository;
@@ -21,89 +23,144 @@ namespace BookSharing.API.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Add new book to database.
+        /// </summary>
+        /// <param name="bookDto"></param>
+        /// <returns></returns>
         // POST: api/books/
         [HttpPost("")]
-        public async Task<ActionResult<BookDto>> CreateBookAsync(BookDto book)
+        public async Task<IActionResult> CreateBookAsync(BookCreateDto bookDto)
         {
-            if (book == null) return BadRequest();
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (bookDto == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            var bookResult = mapper.Map<Book>(book);
+            var book = mapper.Map<Book>(bookDto);
+            await bookRepository.AddAsync(book);
+            var bookReadDto = mapper.Map<BookReadDto>(book);
 
-            await bookRepository.AddAsync(bookResult);
-
-            return CreatedAtAction("GetBookByIdAsync", new { id = book.Id }, book);
+            return CreatedAtAction(nameof(GetBookByIdAsync), new { id = bookReadDto.Id }, bookReadDto);
         }
 
+        /// <summary>
+        /// Change existing book from database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="bookDto"></param>
+        /// <returns></returns>
         // PUT: api/books/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBookAsync(int id, BookDto book)
-        {
-            if (id != book.Id) return BadRequest();
-
-            var bookResult = mapper.Map<Book>(book);
-
-            await bookRepository.UpdateAsync(bookResult);
-
-            return Ok();
-        }
-
-        // DELETE: api/books/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<BookDto>> DeleteBookAsync(int id)
+        public async Task<IActionResult> PutBookAsync(int id, [FromBody] BookUpdateDto bookDto)
         {
             var book = await bookRepository.GetByIdAsync(id);
 
-            if (book == null || book.Id != id) return NotFound();
+            if (book == null)
+            {
+                return NotFound(id);
+            }
+
+            mapper.Map(bookDto, book);
+
+            await bookRepository.UpdateAsync(book);
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Remove existing book from database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // DELETE: api/books/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBookAsync(int id)
+        {
+            var book = await bookRepository.GetByIdAsync(id);
+
+            if (book == null)
+            {
+                return NotFound(id);
+            }
 
             await bookRepository.DeleteAsync(book);
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Return book from database with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/books/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BookDto>> GetBookByIdAsync(int id)
+        public async Task<IActionResult> GetBookByIdAsync(int id)
         {
             var book = await bookRepository.GetByIdAsync(id);
-            if (book == null) return NotFound();
+            
+            if (book == null)
+            {
+                return NotFound(id);
+            }
 
-            var bookResult = mapper.Map<BookDto>(book);
+            var bookReadDto = mapper.Map<BookReadDto>(book);
 
-            return Ok(bookResult);
+            return Ok(bookReadDto);
         }
 
-        //GET: api/books/by_query/"title or author or publisher"
-        [HttpGet("by_query/{query}")]
-        public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooksByQueryAsync(string query)
+        /// <summary>
+        /// Return all books that match the request.
+        /// </summary>
+        /// <param name="request">title of book or author or publisher.</param>
+        /// <returns></returns>
+        //GET: api/books/search/"title or author or publisher"
+        [HttpGet("search/{request}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<BookReadDto>>> GetAllBooksByRequestAsync(string request)
         {
-            var books = await bookRepository.GetAllByQueryAsync(query);
-            var booksResult = mapper.Map<IEnumerable<BookDto>>(books);
+            var books = await bookRepository.GetAllByRequestAsync(request);
+            var booksReadDto = mapper.Map<IEnumerable<BookReadDto>>(books);
 
-            return Ok(booksResult);
+            return Ok(booksReadDto);
         }
 
+        /// <summary>
+        /// Return all book genres from database.
+        /// </summary>
+        /// <returns></returns>
         //GET: api/books/genres/
         [HttpGet("genres")]
-        public async Task<ActionResult<IEnumerable<GenreDto>>> GetAllBookGenresAsync()
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<GenreReadDto>>> GetAllBookGenresAsync()
         {
             var genres = await bookRepository.GetAllBookGenresAsync();
-            var genresResult = mapper.Map<IEnumerable<GenreDto>>(genres);
+            var genresReadDto = mapper.Map<IEnumerable<GenreReadDto>>(genres);
 
-            return Ok(genresResult);
+            return Ok(genresReadDto);
         }
 
+        /// <summary>
+        /// Return all books of concrete book genre.
+        /// </summary>
+        /// <param name="bookGenre"></param>
+        /// <returns></returns>
         //GET: api/books/by_genre/"book genre"
         [HttpGet("by_genre/{bookGenre}")]
-        public async Task<ActionResult<IEnumerable<BookDto>>> GetAllBooksByGenreAsync(string bookGenre)
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<BookReadDto>>> GetAllBooksByGenreAsync(string bookGenre)
         {
-            var genre = await bookRepository.GetBookGenreByQueryAsync(bookGenre);
-            if (genre == null) return NotFound(genre);
+            var genre = await bookRepository.GetBookGenreByRequestAsync(bookGenre);
+            if (genre == null)
+            {
+                return NotFound(bookGenre);
+            }
 
             var books = await bookRepository.GetAllByGenreAsync(genre);
-            var booksResult = mapper.Map<IEnumerable<BookDto>>(books);
+            var booksReadDto = mapper.Map<IEnumerable<BookReadDto>>(books);
 
-            return Ok(booksResult);
+            return Ok(booksReadDto);
         }
     }
 }

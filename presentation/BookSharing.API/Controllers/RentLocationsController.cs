@@ -2,6 +2,7 @@
 using BookSharing.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace BookSharing.API.Controllers
 {
     [Route("api/locations")]
     [ApiController]
+    [Authorize(Roles = "Administrator")]
+
     public class RentLocationsController : ControllerBase
     {
         private readonly IRentLocationRepository rentLocationRepository;
@@ -21,66 +24,106 @@ namespace BookSharing.API.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Add new location to database.
+        /// </summary>
+        /// <param name="locationDto"></param>
+        /// <returns></returns>
         // POST: api/locations/
         [HttpPost("")]
-        public async Task<ActionResult<RentLocationDto>> CreateRentLocationAsync(RentLocationDto location)
+        public async Task<IActionResult> CreateRentLocationAsync(RentLocationCreateDto locationDto)
         {
-            if (location == null) return BadRequest();
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (locationDto == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-            var locationResult = mapper.Map<RentLocation>(location);
+            var location = mapper.Map<RentLocation>(locationDto);
+            await rentLocationRepository.AddAsync(location);
+            var locationReadDto = mapper.Map<RentLocationReadDto>(location);
 
-            await rentLocationRepository.AddAsync(locationResult);
-
-            return CreatedAtAction("GetRentLocationByIdAsync", new { id = location.Id }, location);
+            return CreatedAtAction(nameof(GetRentLocationByIdAsync), new { id = locationReadDto.Id }, locationReadDto);
         }
 
+        /// <summary>
+        /// Change existing location from database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="locationDto"></param>
+        /// <returns></returns>
         // PUT: api/locations/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRentLocationAsync(int id, RentLocationDto location)
+        public async Task<IActionResult> PutRentLocationAsync(int id, [FromBody] RentLocationUpdateDto locationDto)
         {
-            if (id != location.Id) return BadRequest();
+            var location = await rentLocationRepository.GetByIdAsync(id);
 
-            var locationResult = mapper.Map<RentLocation>(location);
+            if (location == null)
+            {
+                return NotFound(id);
+            }
 
-            await rentLocationRepository.UpdateAsync(locationResult);
+            mapper.Map(locationDto, location);
+
+            await rentLocationRepository.UpdateAsync(location);
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Removes existing location from database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/locations/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<RentLocationDto>> DeleteRentLocationAsync(int id)
+        public async Task<IActionResult> DeleteRentLocationAsync(int id)
         {
             var location = await rentLocationRepository.GetByIdAsync(id);
 
-            if (location == null || location.Id != id) return NotFound();
+            if (location == null)
+            {
+                return NotFound(id);
+            }
 
             await rentLocationRepository.DeleteAsync(location);
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Return all rent locations from database.
+        /// </summary>
+        /// <returns></returns>
         // GET: api/locations/
         [HttpGet()]
-        public async Task<ActionResult<IEnumerable<RentLocationDto>>> GetAllRentLocationsAsync()
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<RentLocationReadDto>>> GetAllRentLocationsAsync()
         {
             var locations = await rentLocationRepository.GetAllAsync();
-            var locationsResult = mapper.Map<IEnumerable<RentLocationDto>>(locations);
+            var locationsReadDto = mapper.Map<IEnumerable<RentLocationReadDto>>(locations);
 
-            return Ok(locationsResult);
+            return Ok(locationsReadDto);
         }
 
+        /// <summary>
+        /// Return rent location from database with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/locations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RentLocationDto>> GetRentLocationByIdAsync(int id)
+        public async Task<ActionResult<RentLocationReadDto>> GetRentLocationByIdAsync(int id)
         {
             var location = await rentLocationRepository.GetByIdAsync(id);
-            if (location == null) return NotFound();
+            
+            if (location == null)
+            {
+                return NotFound(id);
+            }
 
-            var locationResult = mapper.Map<RentLocationDto>(location);
+            var locationReadDto = mapper.Map<RentLocationReadDto>(location);
 
-            return locationResult;
+            return Ok(locationReadDto);
         }
     }
 }

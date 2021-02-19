@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookSharing.Auth.Data;
 using BookSharing.Data;
 using BookSharing.Models;
 
@@ -8,20 +9,31 @@ namespace BookSharing.API
     {
         public AutoMapperProfile()
         {
-            CreateMap<RentLocationDto, RentLocation>();
-            CreateMap<RentLocation, RentLocationDto>();
-            CreateMap<UserDto, User>();
-            CreateMap<UserTypeDto, UserType>();
-            CreateMap<User, UserDto>();
-            CreateMap<UserType, UserTypeDto>();
-            CreateMap<BookDto, Book>();
-            CreateMap<Book, BookDto>();
-            CreateMap<AuthorDto,Author>();
-            CreateMap<Author,AuthorDto>();
-            CreateMap<GenreDto, Genre>();
-            CreateMap<Genre,GenreDto>();
-            CreateMap<PublisherDto,Publisher>();
-            CreateMap<Publisher,PublisherDto>();
+            CreateMap<UserCreateDto, User>();
+            CreateMap<UserUpdateDto, User>();
+            CreateMap<User, UserReadDto>();
+
+            CreateMap<UserTypeCreateDto, UserType>();
+            CreateMap<UserType, UserTypeReadDto>();
+
+            CreateMap<RentLocationCreateDto, RentLocation>();
+            CreateMap<RentLocationUpdateDto, RentLocation>();
+            CreateMap<RentLocation, RentLocationReadDto>();
+            
+            CreateMap<BookCreateDto, Book>();
+            CreateMap<BookUpdateDto, Book>();
+            CreateMap<Book, BookReadDto>();
+
+            CreateMap<AuthorCreateDto, Author>();
+            CreateMap<Author, AuthorReadDto>();
+            
+            CreateMap<GenreCreateDto, Genre>();
+            CreateMap<Genre, GenreReadDto>();
+            
+            CreateMap<PublisherCreateDto, Publisher>();
+            CreateMap<Publisher, PublisherReadDto>();
+
+            CreateMap<SignUpDto, User>();
         }
     }
 }
