@@ -18,8 +18,9 @@ namespace BookSharing.Models
         public string PhoneNumber { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 5)]
         public string Password { get; set; }
+        
+        public byte[] StoredSalt { get; set; }
 
         public int UserTypeId { get; set; } 
 
