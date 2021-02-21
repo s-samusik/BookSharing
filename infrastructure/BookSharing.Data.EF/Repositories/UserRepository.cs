@@ -1,5 +1,6 @@
 ﻿using BookSharing.Interfaces;
 using BookSharing.Models;
+using BookSharing.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,10 @@ namespace BookSharing.Data.EF.Repositories
 
             user.UserTypeId = userTypeId;
 
+            var hashSalt = UserService.EncryptPassword(user.Password);
+            user.Password = hashSalt.Hash;
+            user.StoredSalt = hashSalt.Salt;
+
             await context.UserTypes.Where(x => x.Id == userTypeId).LoadAsync();
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
@@ -49,7 +54,7 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             context.Entry(user).State = EntityState.Modified;
-            
+
             await context.SaveChangesAsync();
         }
 
@@ -60,7 +65,7 @@ namespace BookSharing.Data.EF.Repositories
             context.Users.Remove(user);
             await context.SaveChangesAsync();
         }
-        
+
         public async Task<List<User>> GetAllByTypeAsync(UserType type)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
@@ -105,9 +110,11 @@ namespace BookSharing.Data.EF.Repositories
                                     .Where(x => x.Nickname == login
                                              || x.PhoneNumber == login
                                              || x.Email == login)
-                                    .Where(x => x.Password == password)
                                     .SingleOrDefaultAsync();
-            return user;
+
+            var isPasswordMatched = UserService.VerifyPassword(password, user.StoredSalt, user.Password);
+
+            return isPasswordMatched ? user : null;
         }
 
         public async Task<UserType> GetUserTypeByRequestAsync(string query)
@@ -125,7 +132,7 @@ namespace BookSharing.Data.EF.Repositories
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var userTypes = await context.UserTypes.ToListAsync();
-            
+
             return userTypes;
         }
     }
