@@ -4,13 +4,8 @@ using System.Threading.Tasks;
 
 namespace BookSharing.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<User>
     {
-        Task AddAsync(User user);
-        Task UpdateAsync(User user);
-        Task DeleteAsync(User user);
-
-        Task<User> GetByIdAsync(int id);
         Task<List<User>> GetAllByRequestAsync(string request);
         Task<User> GetByRequestAsync(string login, string password);
         Task<UserType> GetUserTypeByRequestAsync(string request);

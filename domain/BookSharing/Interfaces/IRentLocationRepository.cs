@@ -4,13 +4,8 @@ using System.Threading.Tasks;
 
 namespace BookSharing.Interfaces
 {
-    public interface IRentLocationRepository
+    public interface IRentLocationRepository : IBaseRepository<RentLocation>
     {
-        Task AddAsync(RentLocation location);
-        Task UpdateAsync(RentLocation location);
-        Task DeleteAsync(RentLocation location);
-
-        Task<RentLocation> GetByIdAsync(int id);
         Task<List<RentLocation>> GetAllAsync();
     }
 }
