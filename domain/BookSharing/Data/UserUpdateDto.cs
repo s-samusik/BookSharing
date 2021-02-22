@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace BookSharing.Data
 {
     public class UserUpdateDto
     {
+        public IFormFile Avatar { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Nickname not specified")]
         [StringLength(50, MinimumLength = 5)]
         public string Nickname { get; set; }
