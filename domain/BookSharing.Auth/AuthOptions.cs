@@ -30,7 +30,6 @@ namespace BookSharing.Auth
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Nickname),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim ("role", user.UserType.Name)
             };
 

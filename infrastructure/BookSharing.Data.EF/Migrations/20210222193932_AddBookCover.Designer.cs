@@ -4,14 +4,16 @@ using BookSharing.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BookSharing.Data.EF.Migrations
 {
     [DbContext(typeof(BookSharingDbContext))]
-    partial class BookSharingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210222193932_AddBookCover")]
+    partial class AddBookCover
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,13 +167,11 @@ namespace BookSharing.Data.EF.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("StoredSalt")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("UserTypeId")
                         .HasColumnType("int");

@@ -56,7 +56,7 @@ namespace BookSharing.API.Controllers
         /// <param name="signUpDto"></param>
         /// <returns></returns>
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody] SignUpDto signUpDto)
+        public async Task<IActionResult> RegisterAsync([FromForm] SignUpDto signUpDto)
         {
             if (!ModelState.IsValid)
             {

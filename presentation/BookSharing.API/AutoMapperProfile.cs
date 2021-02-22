@@ -2,6 +2,7 @@
 using BookSharing.Auth.Data;
 using BookSharing.Data;
 using BookSharing.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace BookSharing.API
 {
@@ -34,6 +35,9 @@ namespace BookSharing.API
             CreateMap<Publisher, PublisherReadDto>();
 
             CreateMap<SignUpDto, User>();
+
+            CreateMap<IFormFile, byte[]>().ConvertUsing<IFormFileTypeConverter>();
+            CreateMap<byte[], string>().ConvertUsing<ByteTypeConverter>();
         }
     }
 }

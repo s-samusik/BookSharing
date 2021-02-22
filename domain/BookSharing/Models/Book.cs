@@ -6,6 +6,7 @@ namespace BookSharing.Models
     {
         [Key]
         public int Id { get; set; }
+        public byte[] Cover { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 3)]
