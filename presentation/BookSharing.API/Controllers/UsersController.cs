@@ -29,7 +29,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // POST: api/users/
         [HttpPost("")]
-        public async Task<IActionResult> CreateUserAsync(UserCreateDto userDto)
+        public async Task<IActionResult> CreateUserAsync([FromForm] UserCreateDto userDto)
         {
             if (userDto == null || !ModelState.IsValid)
             {
@@ -52,7 +52,7 @@ namespace BookSharing.API.Controllers
         // PUT: api/users/5
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutUserAsync(int id, [FromBody] UserUpdateDto userDto)
+        public async Task<IActionResult> PutUserAsync(int id, [FromForm] UserUpdateDto userDto)
         {
             var user = await userRepository.GetByIdAsync(id);
 

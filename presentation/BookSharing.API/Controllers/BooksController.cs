@@ -30,7 +30,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // POST: api/books/
         [HttpPost("")]
-        public async Task<IActionResult> CreateBookAsync(BookCreateDto bookDto)
+        public async Task<IActionResult> CreateBookAsync([FromForm] BookCreateDto bookDto)
         {
             if (bookDto == null || !ModelState.IsValid)
             {
@@ -52,7 +52,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // PUT: api/books/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBookAsync(int id, [FromBody] BookUpdateDto bookDto)
+        public async Task<IActionResult> PutBookAsync(int id, [FromForm] BookUpdateDto bookDto)
         {
             var book = await bookRepository.GetByIdAsync(id);
 
