@@ -25,7 +25,7 @@ namespace BookSharing.API.Controllers
         }
 
         /// <summary>
-        /// Accept login and password and return a token if the user is found. The login can be nickname, mail or phone number.
+        /// Accept login and password and return a token if the user is found. The login can be mail or phone number.
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -38,7 +38,7 @@ namespace BookSharing.API.Controllers
                 return BadRequest();
             }
 
-            var user = await userRepository.GetByRequestAsync(request.Login, request.Password);
+            var user = await userRepository.GetByLoginAsync(request.Login, request.Password);
 
             if (user == null)
             {
