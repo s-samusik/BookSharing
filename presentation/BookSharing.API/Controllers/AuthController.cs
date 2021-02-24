@@ -3,6 +3,7 @@ using BookSharing.Auth;
 using BookSharing.Auth.Data;
 using BookSharing.Interfaces;
 using BookSharing.Models;
+using BookSharing.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
@@ -25,20 +26,20 @@ namespace BookSharing.API.Controllers
         }
 
         /// <summary>
-        /// Accept login and password and return a token if the user is found. The login can be nickname, mail or phone number.
+        /// Accept login and password and return a token if the user is found. The login can be mail or phone number.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="signInDto"></param>
         /// <returns></returns>
         // POST: api/auth/login
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] SignInDto request)
+        public async Task<IActionResult> LoginAsync([FromBody] SignInDto signInDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var user = await userRepository.GetByRequestAsync(request.Login, request.Password);
+            var user = await userRepository.GetByLoginAsync(signInDto.Login, signInDto.Password);
 
             if (user == null)
             {
@@ -56,14 +57,14 @@ namespace BookSharing.API.Controllers
         /// <param name="signUpDto"></param>
         /// <returns></returns>
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterAsync([FromForm] SignUpDto signUpDto)
+        public async Task<IActionResult> RegisterAsync([FromBody] SignUpDto signUpDto)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || UserRegistrationService.IsLoginIncorrect(signUpDto.Login))
             {
                 return BadRequest();
             }
 
-            var user = mapper.Map<User>(signUpDto);
+            var user = userRepository.CreateByLogin(signUpDto.Login, signUpDto.Password);
             await userRepository.AddAsync(user);
 
             var token = authOptions.Value.GenerateJWT(user);

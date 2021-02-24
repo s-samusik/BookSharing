@@ -97,7 +97,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // GET: api/users/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "Administrator, Librarian")]
+        [Authorize]
         public async Task<IActionResult> GetUserByIdAsync(int id)
         {
             var user = await userRepository.GetByIdAsync(id);

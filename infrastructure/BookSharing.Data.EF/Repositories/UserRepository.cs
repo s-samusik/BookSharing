@@ -101,20 +101,41 @@ namespace BookSharing.Data.EF.Repositories
             return users;
         }
 
-        public async Task<User> GetByRequestAsync(string login, string password)
+        public async Task<User> GetByLoginAsync(string login, string password)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
 
             var user = await context.Users
                                     .Include(x => x.UserType)
-                                    .Where(x => x.Nickname == login
-                                             || x.PhoneNumber == login
-                                             || x.Email == login)
+                                    .Where(x => x.Email == login
+                                             || x.PhoneNumber == login)
                                     .SingleOrDefaultAsync();
+            
+            if (user == null) return null;
 
             var isPasswordMatched = UserPasswordService.VerifyPassword(password, user.StoredSalt, user.Password);
 
             return isPasswordMatched ? user : null;
+        }
+
+        public User CreateByLogin(string login, string password)
+        {
+            User user = new User
+            {
+                Password = password
+            };
+
+            if (UserRegistrationService.IsEmail(login))
+            {
+                user.Email = login;
+            }
+            
+            if (UserRegistrationService.IsPhone(login))
+            {
+                user.PhoneNumber = login;
+            }
+
+            return user;
         }
 
         public async Task<UserType> GetUserTypeByRequestAsync(string query)
