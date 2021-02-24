@@ -1,4 +1,4 @@
-﻿namespace BookSharing.Services
+﻿namespace BookSharing.Models
 {
     public class HashSalt
     {

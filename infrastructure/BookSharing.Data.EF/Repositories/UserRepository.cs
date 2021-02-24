@@ -40,7 +40,7 @@ namespace BookSharing.Data.EF.Repositories
 
             user.UserTypeId = userTypeId;
 
-            var hashSalt = UserService.EncryptPassword(user.Password);
+            var hashSalt = UserPasswordService.EncryptPassword(user.Password);
             user.Password = hashSalt.Hash;
             user.StoredSalt = hashSalt.Salt;
 
@@ -112,7 +112,7 @@ namespace BookSharing.Data.EF.Repositories
                                              || x.Email == login)
                                     .SingleOrDefaultAsync();
 
-            var isPasswordMatched = UserService.VerifyPassword(password, user.StoredSalt, user.Password);
+            var isPasswordMatched = UserPasswordService.VerifyPassword(password, user.StoredSalt, user.Password);
 
             return isPasswordMatched ? user : null;
         }

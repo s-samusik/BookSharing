@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 
 namespace BookSharing.API
 {
@@ -6,7 +7,13 @@ namespace BookSharing.API
     {
         public string Convert(byte[] source, string destination, ResolutionContext context)
         {
-            destination = System.Convert.ToBase64String(source);
+            destination = String.Empty;
+
+            if (source != null)
+            {
+                destination = System.Convert.ToBase64String(source);
+            }
+            
             return destination;
         }
     }
