@@ -110,10 +110,32 @@ namespace BookSharing.Data.EF.Repositories
                                     .Where(x => x.Email == login
                                              || x.PhoneNumber == login)
                                     .SingleOrDefaultAsync();
+            
+            if (user == null) return null;
 
             var isPasswordMatched = UserPasswordService.VerifyPassword(password, user.StoredSalt, user.Password);
 
             return isPasswordMatched ? user : null;
+        }
+
+        public User CreateByLogin(string login, string password)
+        {
+            User user = new User
+            {
+                Password = password
+            };
+
+            if (UserRegistrationService.IsEmail(login))
+            {
+                user.Email = login;
+            }
+            
+            if (UserRegistrationService.IsPhone(login))
+            {
+                user.PhoneNumber = login;
+            }
+
+            return user;
         }
 
         public async Task<UserType> GetUserTypeByRequestAsync(string query)
