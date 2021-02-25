@@ -43,7 +43,7 @@ namespace BookSharing.API.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return NotFound(signInDto);
             }
 
             var token = authOptions.Value.GenerateJWT(user);
@@ -56,12 +56,23 @@ namespace BookSharing.API.Controllers
         /// </summary>
         /// <param name="signUpDto"></param>
         /// <returns></returns>
+        // POST: api/auth/register
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] SignUpDto signUpDto)
         {
-            if (!ModelState.IsValid || UserRegistrationService.IsLoginIncorrect(signUpDto.Login))
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
+            }
+
+            if (UserRegistrationService.IsLoginIncorrect(signUpDto.Login))
+            {
+                return BadRequest($"login '{signUpDto.Login}' is incorrect");
+            }
+
+            if (await userRepository.VerifyLoginAsync(signUpDto.Login))
+            {
+                return BadRequest($"Login {signUpDto.Login} is already in use");
             }
 
             var user = userRepository.CreateByLogin(signUpDto.Login, signUpDto.Password);

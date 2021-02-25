@@ -156,5 +156,19 @@ namespace BookSharing.Data.EF.Repositories
 
             return userTypes;
         }
+
+        public async Task<bool> VerifyLoginAsync(string login)
+        {
+            var context = dbContextFactory.Create(typeof(UserRepository));
+
+            var user = await context.Users
+                                    .Where(x => x.Email == login
+                                             || x.PhoneNumber == login)
+                                    .SingleOrDefaultAsync();
+            
+            if (user == null) return false;
+
+            return true;
+        }
     }
 }
