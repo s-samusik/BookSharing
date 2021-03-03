@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/s-samusik/BookSharing.svg?branch=master)](https://travis-ci.org/s-samusik/BookSharing)
 # BOOK SHARING
 
 **Web platform that people can visit to find and read books. A lot of books.**  
