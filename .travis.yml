@@ -2,7 +2,7 @@ language: csharp
 os: linux
 mono: none
 dist: xenial
-dotnet: 3.1
+dotnet: 3.1.406
 solution: BookSharing.sln
 
 install:
@@ -10,3 +10,8 @@ install:
   
 script:
   - dotnet build
+  
+notifications:
+  slack:
+    rooms:
+      - aistrainee2020:ihDiPwthejNnbu8jEGUWOykY#projects_book-sharing
