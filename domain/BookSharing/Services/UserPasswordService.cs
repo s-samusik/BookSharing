@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using BookSharing.Models;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Security.Cryptography;
 
 namespace BookSharing.Services
 {
-    public static class UserService
+    public static class UserPasswordService
     {
         public static HashSalt EncryptPassword(string password)
         {

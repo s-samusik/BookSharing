@@ -10,11 +10,13 @@ namespace BookSharing.API
         {
             destination = null;
 
-            using (var binaryReader = new BinaryReader(source.OpenReadStream()))
+            if (source != null)
             {
-                destination = binaryReader.ReadBytes((int)source.Length);
+                using (var binaryReader = new BinaryReader(source.OpenReadStream()))
+                {
+                    destination = binaryReader.ReadBytes((int)source.Length);
+                }
             }
-
             return destination;
         }
     }

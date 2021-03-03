@@ -6,9 +6,9 @@
     <members>
         <member name="M:BookSharing.API.Controllers.AuthController.LoginAsync(BookSharing.Auth.Data.SignInDto)">
             <summary>
-            Accept login and password and return a token if the user is found. The login can be nickname, mail or phone number.
+            Accept login and password and return a token if the user is found. The login can be mail or phone number.
             </summary>
-            <param name="request"></param>
+            <param name="signInDto"></param>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.AuthController.RegisterAsync(BookSharing.Auth.Data.SignUpDto)">

@@ -10,6 +10,6 @@ namespace BookSharing.Auth.Data
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password not specified")]
         [StringLength(50, MinimumLength = 5)]
-        public string Password  { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -7,8 +7,6 @@ namespace BookSharing.Data
     {
         public IFormFile Avatar { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Nickname not specified")]
-        [StringLength(50, MinimumLength = 5)]
         public string Nickname { get; set; }
 
         [EmailAddress]

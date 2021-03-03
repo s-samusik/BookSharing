@@ -1,21 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BookSharing.Auth.Data
 {
     public class SignUpDto
     {
-        public IFormFile Avatar { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Nickname not specified")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Login not specified")]
         [StringLength(50, MinimumLength = 5)]
-        public string Nickname { get; set; }
-
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Phone]
-        public string PhoneNumber { get; set; }
+        public string Login { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Password not specified")]
         [StringLength(50, MinimumLength = 5)]
