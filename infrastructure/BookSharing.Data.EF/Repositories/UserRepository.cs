@@ -52,6 +52,10 @@ namespace BookSharing.Data.EF.Repositories
         public async Task UpdateAsync(User user)
         {
             var context = dbContextFactory.Create(typeof(UserRepository));
+            
+            var hashSalt = UserPasswordService.EncryptPassword(user.Password);
+            user.Password = hashSalt.Hash;
+            user.StoredSalt = hashSalt.Salt;
 
             context.Entry(user).State = EntityState.Modified;
 
