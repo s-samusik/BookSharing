@@ -30,7 +30,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // POST: api/books/
         [HttpPost("")]
-        public async Task<IActionResult> CreateBookAsync([FromForm] BookCreateDto bookDto)
+        public async Task<IActionResult> CreateBookAsync([FromForm] CreateBookDto bookDto)
         {
             if (bookDto == null || !ModelState.IsValid)
             {
@@ -39,7 +39,7 @@ namespace BookSharing.API.Controllers
 
             var book = mapper.Map<Book>(bookDto);
             await bookRepository.AddAsync(book);
-            var bookReadDto = mapper.Map<BookReadDto>(book);
+            var bookReadDto = mapper.Map<ReadBookDto>(book);
 
             return CreatedAtAction(nameof(GetBookByIdAsync), new { id = bookReadDto.Id }, bookReadDto);
         }
@@ -52,7 +52,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // PUT: api/books/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBookAsync(int id, [FromForm] BookUpdateDto bookDto)
+        public async Task<IActionResult> PutBookAsync(int id, [FromForm] UpdateBookDto bookDto)
         {
             var book = await bookRepository.GetByIdAsync(id);
 
@@ -105,7 +105,7 @@ namespace BookSharing.API.Controllers
                 return NotFound(id);
             }
 
-            var bookReadDto = mapper.Map<BookReadDto>(book);
+            var bookReadDto = mapper.Map<ReadBookDto>(book);
 
             return Ok(bookReadDto);
         }
@@ -118,10 +118,10 @@ namespace BookSharing.API.Controllers
         //GET: api/books/search/"title or author or publisher"
         [HttpGet("search/{request}")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<BookReadDto>>> GetAllBooksByRequestAsync(string request)
+        public async Task<ActionResult<IEnumerable<ReadBookDto>>> GetAllBooksByRequestAsync(string request)
         {
             var books = await bookRepository.GetAllByRequestAsync(request);
-            var booksReadDto = mapper.Map<IEnumerable<BookReadDto>>(books);
+            var booksReadDto = mapper.Map<IEnumerable<ReadBookDto>>(books);
 
             return Ok(booksReadDto);
         }
@@ -133,10 +133,10 @@ namespace BookSharing.API.Controllers
         //GET: api/books/genres/
         [HttpGet("genres")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<GenreReadDto>>> GetAllBookGenresAsync()
+        public async Task<ActionResult<IEnumerable<ReadGenreDto>>> GetAllBookGenresAsync()
         {
             var genres = await bookRepository.GetAllBookGenresAsync();
-            var genresReadDto = mapper.Map<IEnumerable<GenreReadDto>>(genres);
+            var genresReadDto = mapper.Map<IEnumerable<ReadGenreDto>>(genres);
 
             return Ok(genresReadDto);
         }
@@ -149,7 +149,7 @@ namespace BookSharing.API.Controllers
         //GET: api/books/by_genre/"book genre"
         [HttpGet("by_genre/{bookGenre}")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<BookReadDto>>> GetAllBooksByGenreAsync(string bookGenre)
+        public async Task<ActionResult<IEnumerable<ReadBookDto>>> GetAllBooksByGenreAsync(string bookGenre)
         {
             var genre = await bookRepository.GetBookGenreByRequestAsync(bookGenre);
             if (genre == null)
@@ -158,7 +158,7 @@ namespace BookSharing.API.Controllers
             }
 
             var books = await bookRepository.GetAllByGenreAsync(genre);
-            var booksReadDto = mapper.Map<IEnumerable<BookReadDto>>(books);
+            var booksReadDto = mapper.Map<IEnumerable<ReadBookDto>>(books);
 
             return Ok(booksReadDto);
         }

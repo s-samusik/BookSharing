@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookSharing.Data
 {
-    public class BookCreateDto
+    public class CreateBookDto
     {
         public IFormFile Cover { get; set; }
 
@@ -14,12 +14,12 @@ namespace BookSharing.Data
         public string Description { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Genre not specified")]
-        public GenreCreateDto Genre { get; set; }
+        public CreateGenreDto Genre { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Author not specified")]
-        public AuthorCreateDto Author { get; set; }
+        public CreateAuthorDto Author { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Publisher not specified")]
-        public PublisherCreateDto Publisher { get; set; }
+        public CreatePublisherDto Publisher { get; set; }
     }
 }

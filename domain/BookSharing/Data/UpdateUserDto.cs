@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookSharing.Data
 {
-    public class UserCreateDto
+    public class UpdateUserDto
     {
         public IFormFile Avatar { get; set; }
 
@@ -22,5 +22,8 @@ namespace BookSharing.Data
         [Required(AllowEmptyStrings = false)]
         [Compare("Password", ErrorMessage = "Passwords don't match")]
         public string PasswordConfirm { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "User type Id not specified")]
+        public int UserTypeId { get; set; }
     }
 }

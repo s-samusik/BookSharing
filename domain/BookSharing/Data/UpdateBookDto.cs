@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookSharing.Data
 {
-    public class BookUpdateDto
+    public class UpdateBookDto
     {
         public IFormFile Cover { get; set; }
 
