@@ -2,7 +2,7 @@
 
 namespace BookSharing.Data
 {
-    public class UserTypeCreateDto
+    public class CreateUserTypeDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "User's type not specified")]
         [StringLength(50, MinimumLength = 3)]

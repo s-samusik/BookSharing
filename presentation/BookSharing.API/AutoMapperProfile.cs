@@ -10,29 +10,29 @@ namespace BookSharing.API
     {
         public AutoMapperProfile()
         {
-            CreateMap<UserCreateDto, User>();
-            CreateMap<UserUpdateDto, User>();
-            CreateMap<User, UserReadDto>();
+            CreateMap<CreateUserDto, User>();
+            CreateMap<UpdateUserDto, User>();
+            CreateMap<User, ReadUserDto>();
 
-            CreateMap<UserTypeCreateDto, UserType>();
-            CreateMap<UserType, UserTypeReadDto>();
+            CreateMap<CreateUserTypeDto, UserType>();
+            CreateMap<UserType, ReadUserTypeDto>();
 
-            CreateMap<RentLocationCreateDto, RentLocation>();
-            CreateMap<RentLocationUpdateDto, RentLocation>();
-            CreateMap<RentLocation, RentLocationReadDto>();
+            CreateMap<CreateRentLocationDto, RentLocation>();
+            CreateMap<UpdateRentLocationDto, RentLocation>();
+            CreateMap<RentLocation, ReadRentLocationDto>();
             
-            CreateMap<BookCreateDto, Book>();
-            CreateMap<BookUpdateDto, Book>();
-            CreateMap<Book, BookReadDto>();
+            CreateMap<CreateBookDto, Book>();
+            CreateMap<UpdateBookDto, Book>();
+            CreateMap<Book, ReadBookDto>();
 
-            CreateMap<AuthorCreateDto, Author>();
-            CreateMap<Author, AuthorReadDto>();
+            CreateMap<CreateAuthorDto, Author>();
+            CreateMap<Author, ReadAuthorDto>();
             
-            CreateMap<GenreCreateDto, Genre>();
-            CreateMap<Genre, GenreReadDto>();
+            CreateMap<CreateGenreDto, Genre>();
+            CreateMap<Genre, ReadGenreDto>();
             
-            CreateMap<PublisherCreateDto, Publisher>();
-            CreateMap<Publisher, PublisherReadDto>();
+            CreateMap<CreatePublisherDto, Publisher>();
+            CreateMap<Publisher, ReadPublisherDto>();
 
             CreateMap<SignUpDto, User>();
 

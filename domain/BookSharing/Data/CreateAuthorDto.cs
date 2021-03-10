@@ -2,7 +2,7 @@
 
 namespace BookSharing.Data
 {
-    public class AuthorCreateDto
+    public class CreateAuthorDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Name not specified")]
         [StringLength(50, MinimumLength = 3)]
