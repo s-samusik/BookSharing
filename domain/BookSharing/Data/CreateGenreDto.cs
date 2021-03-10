@@ -2,7 +2,7 @@
 
 namespace BookSharing.Data
 {
-    public class GenreCreateDto
+    public class CreateGenreDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Genre not specified")]
         [StringLength(50, MinimumLength = 3)]

@@ -2,7 +2,7 @@
 
 namespace BookSharing.Data
 {
-    public class RentLocationUpdateDto
+    public class UpdateRentLocationDto
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Name not specified")]
         [StringLength(50, MinimumLength = 3)]

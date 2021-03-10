@@ -1,6 +1,6 @@
 ﻿namespace BookSharing.Data
 {
-    public class PublisherReadDto
+    public class ReadGenreDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

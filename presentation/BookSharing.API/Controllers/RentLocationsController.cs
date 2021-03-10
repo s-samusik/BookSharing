@@ -31,7 +31,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // POST: api/locations/
         [HttpPost("")]
-        public async Task<IActionResult> CreateRentLocationAsync(RentLocationCreateDto locationDto)
+        public async Task<IActionResult> CreateRentLocationAsync(CreateRentLocationDto locationDto)
         {
             if (locationDto == null || !ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace BookSharing.API.Controllers
 
             var location = mapper.Map<RentLocation>(locationDto);
             await rentLocationRepository.AddAsync(location);
-            var locationReadDto = mapper.Map<RentLocationReadDto>(location);
+            var locationReadDto = mapper.Map<ReadRentLocationDto>(location);
 
             return CreatedAtAction(nameof(GetRentLocationByIdAsync), new { id = locationReadDto.Id }, locationReadDto);
         }
@@ -53,7 +53,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // PUT: api/locations/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRentLocationAsync(int id, [FromBody] RentLocationUpdateDto locationDto)
+        public async Task<IActionResult> PutRentLocationAsync(int id, [FromBody] UpdateRentLocationDto locationDto)
         {
             var location = await rentLocationRepository.GetByIdAsync(id);
 
@@ -97,10 +97,10 @@ namespace BookSharing.API.Controllers
         // GET: api/locations/
         [HttpGet()]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<RentLocationReadDto>>> GetAllRentLocationsAsync()
+        public async Task<ActionResult<IEnumerable<ReadRentLocationDto>>> GetAllRentLocationsAsync()
         {
             var locations = await rentLocationRepository.GetAllAsync();
-            var locationsReadDto = mapper.Map<IEnumerable<RentLocationReadDto>>(locations);
+            var locationsReadDto = mapper.Map<IEnumerable<ReadRentLocationDto>>(locations);
 
             return Ok(locationsReadDto);
         }
@@ -112,7 +112,7 @@ namespace BookSharing.API.Controllers
         /// <returns></returns>
         // GET: api/locations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RentLocationReadDto>> GetRentLocationByIdAsync(int id)
+        public async Task<ActionResult<ReadRentLocationDto>> GetRentLocationByIdAsync(int id)
         {
             var location = await rentLocationRepository.GetByIdAsync(id);
             
@@ -121,7 +121,7 @@ namespace BookSharing.API.Controllers
                 return NotFound(id);
             }
 
-            var locationReadDto = mapper.Map<RentLocationReadDto>(location);
+            var locationReadDto = mapper.Map<ReadRentLocationDto>(location);
 
             return Ok(locationReadDto);
         }
