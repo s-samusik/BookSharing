@@ -18,14 +18,14 @@
             <param name="signUpDto"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.BooksController.CreateBookAsync(BookSharing.Data.BookCreateDto)">
+        <member name="M:BookSharing.API.Controllers.BooksController.CreateBookAsync(BookSharing.Data.CreateBookDto)">
             <summary>
             Add new book to database.
             </summary>
             <param name="bookDto"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.BooksController.PutBookAsync(System.Int32,BookSharing.Data.BookUpdateDto)">
+        <member name="M:BookSharing.API.Controllers.BooksController.PutBookAsync(System.Int32,BookSharing.Data.UpdateBookDto)">
             <summary>
             Change existing book from database.
             </summary>
@@ -67,14 +67,14 @@
             <param name="bookGenre"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.RentLocationsController.CreateRentLocationAsync(BookSharing.Data.RentLocationCreateDto)">
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.CreateRentLocationAsync(BookSharing.Data.CreateRentLocationDto)">
             <summary>
             Add new location to database.
             </summary>
             <param name="locationDto"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.RentLocationsController.PutRentLocationAsync(System.Int32,BookSharing.Data.RentLocationUpdateDto)">
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.PutRentLocationAsync(System.Int32,BookSharing.Data.UpdateRentLocationDto)">
             <summary>
             Change existing location from database.
             </summary>
@@ -102,14 +102,14 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.UsersController.CreateUserAsync(BookSharing.Data.UserCreateDto)">
+        <member name="M:BookSharing.API.Controllers.UsersController.CreateUserAsync(BookSharing.Data.CreateUserDto)">
             <summary>
             Add new user to database.
             </summary>
             <param name="userDto"></param>
             <returns></returns>
         </member>
-        <member name="M:BookSharing.API.Controllers.UsersController.PutUserAsync(System.Int32,BookSharing.Data.UserUpdateDto)">
+        <member name="M:BookSharing.API.Controllers.UsersController.PutUserAsync(System.Int32,BookSharing.Data.UpdateUserDto)">
             <summary>
             Change existing user from database.
             </summary>
