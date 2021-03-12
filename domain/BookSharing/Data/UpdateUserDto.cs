@@ -15,14 +15,6 @@ namespace BookSharing.Data
         [Phone]
         public string PhoneNumber { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Password not specified")]
-        [StringLength(50, MinimumLength = 5)]
-        public string Password { get; set; }
-
-        [Required(AllowEmptyStrings = false)]
-        [Compare("Password", ErrorMessage = "Passwords don't match")]
-        public string PasswordConfirm { get; set; }
-
         [Required(AllowEmptyStrings = false, ErrorMessage = "User type Id not specified")]
         public int UserTypeId { get; set; }
     }
