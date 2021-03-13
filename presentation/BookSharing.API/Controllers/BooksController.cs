@@ -176,5 +176,22 @@ namespace BookSharing.API.Controllers
 
             return Ok(count);
         }
+
+        /// <summary>
+        /// Return popular books from database.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        //GET: api/books/popular
+        [HttpGet("popular")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<ReadBookDto>>> GetPopularBooksAsync(int number)
+        {
+            var books = await bookRepository.GetPopularBooksAsync(number);
+            
+            var booksReadDto = mapper.Map<IEnumerable<ReadBookDto>>(books);
+
+            return Ok(booksReadDto);
+        }
     }
 }

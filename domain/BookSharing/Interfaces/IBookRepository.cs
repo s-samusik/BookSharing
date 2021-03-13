@@ -11,5 +11,6 @@ namespace BookSharing.Interfaces
         Task<Genre> GetBookGenreByRequestAsync(string request);
         Task<List<Book>> GetAllByGenreAsync(Genre genre);
         Task<int> CountAsync();
+        Task<List<Book>> GetPopularBooksAsync(int number);
     }
 }
