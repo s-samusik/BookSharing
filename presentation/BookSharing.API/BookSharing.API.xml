@@ -151,5 +151,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.GetCountOfUsersAsync">
+            <summary>
+            Return count of users from database.
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

@@ -163,5 +163,18 @@ namespace BookSharing.API.Controllers
 
             return Ok(typesReadDto);
         }
+
+        /// <summary>
+        /// Count users from database.
+        /// </summary>
+        /// <returns></returns>
+        //GET: api/users/types/
+        [HttpGet("count")]
+        public async Task<IActionResult> CountUsersAsync()
+        {
+            var count = await userRepository.CountAsync();
+
+            return Ok(count);
+        }
     }
 }
