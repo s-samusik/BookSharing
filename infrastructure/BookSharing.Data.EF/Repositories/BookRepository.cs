@@ -36,7 +36,7 @@ namespace BookSharing.Data.EF.Repositories
             }
             book.Genre = bookGenre;
 
-            
+
             var bookAuthor = await context.Authors
                                       .Where(x => x.Name == book.Author.Name)
                                       .FirstOrDefaultAsync();
@@ -53,8 +53,8 @@ namespace BookSharing.Data.EF.Repositories
                 bookAuthor = author;
             }
             book.Author = bookAuthor;
-            
-            
+
+
             var bookPublisher = await context.Publishers
                                              .Where(x => x.Name == book.Publisher.Name)
                                              .FirstOrDefaultAsync();
@@ -147,6 +147,35 @@ namespace BookSharing.Data.EF.Repositories
                                      .Include(x => x.Author)
                                      .Include(x => x.Publisher)
                                      .Where(x => x.Genre.Id == genre.Id)
+                                     .ToListAsync();
+            return books;
+        }
+
+        public async Task<int> CountAsync()
+        {
+            var context = dbContextFactory.Create(typeof(BookRepository));
+
+            var count = await context.Books.CountAsync();
+
+            return count;
+        }
+
+        public async Task<List<Book>> GetPopularBooksAsync(int number)
+        {
+            var context = dbContextFactory.Create(typeof(BookRepository));
+
+            var count = await context.Books.CountAsync();
+
+            if (number > count)
+            {
+                number = count;
+            }
+
+            var books = await context.Books
+                                     .Include(x => x.Genre)
+                                     .Include(x => x.Author)
+                                     .Include(x => x.Publisher)
+                                     .Take(number)
                                      .ToListAsync();
             return books;
         }

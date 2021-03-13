@@ -7,5 +7,6 @@ namespace BookSharing.Interfaces
     public interface IRentLocationRepository : IBaseRepository<RentLocation>
     {
         Task<List<RentLocation>> GetAllAsync();
+        Task<int> CountAsync();
     }
 }

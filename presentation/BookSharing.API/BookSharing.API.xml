@@ -67,6 +67,19 @@
             <param name="bookGenre"></param>
             <returns></returns>
         </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.CountBooksAsync">
+            <summary>
+            Count books from database.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.BooksController.GetPopularBooksAsync(System.Int32)">
+            <summary>
+            Return popular books from database.
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
         <member name="M:BookSharing.API.Controllers.RentLocationsController.CreateRentLocationAsync(BookSharing.Data.CreateRentLocationDto)">
             <summary>
             Add new location to database.
@@ -100,6 +113,12 @@
             Return rent location from database with the specified id.
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.CountRentLocationsAsync">
+            <summary>
+            Count locations from database.
+            </summary>
             <returns></returns>
         </member>
         <member name="M:BookSharing.API.Controllers.UsersController.CreateUserAsync(BookSharing.Data.CreateUserDto)">
@@ -148,6 +167,12 @@
         <member name="M:BookSharing.API.Controllers.UsersController.GetAllUserTypesAsync">
             <summary>
             Return all user tytpes from database.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BookSharing.API.Controllers.UsersController.CountUsersAsync">
+            <summary>
+            Count users from database.
             </summary>
             <returns></returns>
         </member>
