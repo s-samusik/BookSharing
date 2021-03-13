@@ -125,5 +125,19 @@ namespace BookSharing.API.Controllers
 
             return Ok(locationReadDto);
         }
+
+        /// <summary>
+        /// Count locations from database.
+        /// </summary>
+        /// <returns></returns>
+        // GET: api/locations/count
+        [HttpGet("count")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CountRentLocationsAsync()
+        {
+            var count = await rentLocationRepository.CountAsync();
+
+            return Ok(count);
+        }
     }
 }

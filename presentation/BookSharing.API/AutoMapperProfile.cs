@@ -11,18 +11,21 @@ namespace BookSharing.API
         public AutoMapperProfile()
         {
             CreateMap<CreateUserDto, User>();
-            CreateMap<UpdateUserDto, User>();
+            CreateMap<UpdateUserDto, User>().ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) => srcMember != null));
             CreateMap<User, ReadUserDto>();
-
+ 
             CreateMap<CreateUserTypeDto, UserType>();
             CreateMap<UserType, ReadUserTypeDto>();
 
             CreateMap<CreateRentLocationDto, RentLocation>();
-            CreateMap<UpdateRentLocationDto, RentLocation>();
+            CreateMap<UpdateRentLocationDto, RentLocation>().ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) => srcMember != null));
             CreateMap<RentLocation, ReadRentLocationDto>();
             
             CreateMap<CreateBookDto, Book>();
-            CreateMap<UpdateBookDto, Book>();
+            CreateMap<UpdateBookDto, Book>().ForAllMembers(opt =>
+                opt.Condition((src, dest, srcMember) => srcMember != null));
             CreateMap<Book, ReadBookDto>();
 
             CreateMap<CreateAuthorDto, Author>();
