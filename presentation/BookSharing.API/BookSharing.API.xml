@@ -108,6 +108,12 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:BookSharing.API.Controllers.RentLocationsController.CountRentLocationsAsync">
+            <summary>
+            Count locations from database.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:BookSharing.API.Controllers.UsersController.CreateUserAsync(BookSharing.Data.CreateUserDto)">
             <summary>
             Add new user to database.
