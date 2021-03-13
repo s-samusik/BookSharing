@@ -150,5 +150,14 @@ namespace BookSharing.Data.EF.Repositories
                                      .ToListAsync();
             return books;
         }
+
+        public async Task<int> CountAsync()
+        {
+            var context = dbContextFactory.Create(typeof(BookRepository));
+
+            var count = await context.Books.CountAsync();
+
+            return count;
+        }
     }
 }

@@ -162,5 +162,19 @@ namespace BookSharing.API.Controllers
 
             return Ok(booksReadDto);
         }
+
+        /// <summary>
+        /// Count books from database.
+        /// </summary>
+        /// <returns></returns>
+        //GET: api/books/count
+        [HttpGet("count")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CountBooksAsync()
+        {
+            var count = await bookRepository.CountAsync();
+
+            return Ok(count);
+        }
     }
 }
